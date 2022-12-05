@@ -33,6 +33,16 @@ public class Player : MonoBehaviour
 
         }
 
+        if (Input.GetAxis("Horizontal") == 0 && canjump == true)
+        {
+            Invoke("RunCheck", 2f);
+        }
+
+        if (Input.GetAxis("Horizontal") != 0 && moveSpeed < 7)
+        {
+            moveSpeed = moveSpeed + 4 * Time.deltaTime;
+        }
+
         if (rb.velocity.x > 0)
         {
             isright = 1;
@@ -42,6 +52,15 @@ public class Player : MonoBehaviour
             isright = -1;
         }
     }
+
+    private void RunCheck()
+    {
+        if (Input.GetAxis("Horizontal") == 0 && canjump == true)
+        {
+            moveSpeed = 2;
+        }
+    }
+
 
     void FixedUpdate()
     {
