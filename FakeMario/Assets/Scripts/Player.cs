@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetAxis("Horizontal") == 0 && canjump == true)
         {
-            Invoke("RunCheck", 2f);
+            Invoke("RunCheck", 3f);
         }
 
         if (Input.GetAxis("Horizontal") != 0 && moveSpeed < 7)
