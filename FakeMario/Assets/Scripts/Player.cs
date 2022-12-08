@@ -51,6 +51,11 @@ public class Player : MonoBehaviour
         {
             isright = -1;
         }
+
+        if (rb.velocity.y != 0)
+        {
+            Debug.Log(rb.velocity.y);
+        }
     }
 
     private void RunCheck()
