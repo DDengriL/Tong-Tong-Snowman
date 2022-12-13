@@ -790,6 +790,8 @@ MonoBehaviour:
   Seconds: 3
   Health_Status: {fileID: 1136469944}
   HealthText: {fileID: 81465318}
+  LoadScene_:
+  - MainMenu
 --- !u!1 &1787112546
 GameObject:
   m_ObjectHideFlags: 0

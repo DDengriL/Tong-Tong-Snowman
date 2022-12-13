@@ -20,6 +20,12 @@ public class LoadingStatus : MonoBehaviour
 
     [SerializeField] private Text HealthText;
 
+
+    [Header("로딩 후 불러올 씬 목록")]
+    [SerializeField] private string[] LoadScene_ = new string[0];
+
+    private int sceneNum = 0;
+
     PlayerHealth health;
 
     // Start is called before the first frame update
@@ -37,7 +43,7 @@ public class LoadingStatus : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("Level1");
+            SceneManager.LoadScene(LoadScene_[sceneNum]);
             DontDestroyOnLoad(Health_Status);
         }
         HealthText.text = health.Health.ToString();
