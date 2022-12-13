@@ -7,6 +7,10 @@ public class Camera : MonoBehaviour
     [SerializeField] Transform target;
     [SerializeField] float smoothing;
     [SerializeField] float yPos;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 096d312e489d92bb9c786fe0882be79d5c36855f
     Vector3 velocity = Vector3.zero;
 
 
