@@ -15,10 +15,17 @@ public class Player : MonoBehaviour
 
     private int isright;
     private bool canjump = false;
+    private bool canHold = false;
 
+    private float temp;
+
+    private float F = 0.01666f;
+    private float Y;
+    private bool canDe;
 
     void Start()
     {
+        temp = jumpPower;
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -30,8 +37,33 @@ public class Player : MonoBehaviour
 
             rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             canjump = false;
-
         }
+        if (Input.GetKey(KeyCode.C))
+        {
+            if (!canHold)
+            {
+                Y = 20;
+            }
+
+            Invoke("Hold", 0.1f);
+            Invoke("HoldC", 0.3f);
+            Invoke("Yde", 0.2f);
+            if (canDe)
+            {
+                Y -= 0.2f;
+            }
+                
+            if (canHold)
+                rb.velocity = new Vector2(rb.velocity.x, Y);
+        }
+        if (Input.GetKeyUp(KeyCode.C))
+        {
+            canDe = false;
+            canHold = false;
+            jumpPower = temp;
+        }
+
+
 
         if (Input.GetAxis("Horizontal") == 0 && canjump == true)
         {
@@ -51,7 +83,18 @@ public class Player : MonoBehaviour
         {
             isright = -1;
         }
+
+        if (rb.velocity.y != 0)
+        {
+            Debug.Log(rb.velocity.y);
+        }
     }
+
+    void Hold() => canHold = true;
+    void HoldC() => canHold = false;
+    void Yde() => canDe = true;
+
+
 
     private void RunCheck()
     {
@@ -70,6 +113,9 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        canHold = false;
+        rb.velocity = new Vector2(rb.velocity.x, 0);
+
         if (collision.gameObject.tag == "Ground")
         {
             canjump = true;
