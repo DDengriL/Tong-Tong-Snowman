@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class Block_Ani : MonoBehaviour
 {
+    Animator ani;
     private bool playerTouch;
+
+    private void Start()
+    {
+        ani = GetComponent<Animator>();
+    }
 
     void Update()
     {
@@ -86,6 +92,7 @@ public class Block_Ani : MonoBehaviour
     {
         transform.position -= new Vector3(0, 0.06f);
         transform.localScale -= new Vector3(0.08f, 0.08f);
+        ani.SetBool("isTouch", true);
     }
     //---------------------------------Down------------------------------------------
 
