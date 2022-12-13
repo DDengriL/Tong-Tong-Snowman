@@ -37,6 +37,9 @@ public class Player : MonoBehaviour
 
             rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             canjump = false;
+            Invoke("Hold", 0.1f);
+            Invoke("HoldC", 0.3f);
+            Invoke("Yde", 0.2f);
         }
         if (Input.GetKey(KeyCode.C))
         {
@@ -44,10 +47,6 @@ public class Player : MonoBehaviour
             {
                 Y = 20;
             }
-
-            Invoke("Hold", 0.1f);
-            Invoke("HoldC", 0.3f);
-            Invoke("Yde", 0.2f);
             if (canDe)
             {
                 Y -= 0.2f;
