@@ -21,6 +21,9 @@ public class Intro : MonoBehaviour
     [Header("Title Bounce Animation")]
     [SerializeField] private Animator Title_anim;
 
+    [Header("Fade Blackscreen When Starting Game")]
+    [SerializeField] private Image startGame_Blackscreen;
+
     [Header("Intro Circle Opacity")]
     [SerializeField] private Image Circle_Transition_img;
     [SerializeField] private Image img1;
@@ -43,6 +46,8 @@ public class Intro : MonoBehaviour
 
 
     private bool AFKState = false;
+    private bool isStart = false;
+    private bool introEnd = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -53,9 +58,32 @@ public class Intro : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        GameStarting();
+    }
+    private void GameStarting()
+    {
+        if(introEnd == true && AFKState == false && isStart == false)
+        {
+            if(Input.anyKeyDown)
+            {
+                isStart = true;
+                StartCoroutine(StartingGame());
+            }
+        }
     }
 
+    IEnumerator StartingGame()
+    {
+        Color color = startGame_Blackscreen.color;
+        for(float i = 0.0f; i <= 1.0f; i += 0.002f)
+        {
+            color.a = i;
+            startGame_Blackscreen.color = color;
+            yield return new WaitForSeconds(0.001f);
+        }
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene("StageSelect");
+    }
     IEnumerator IntroStart()
     {
         yield return new WaitForSeconds(1.5f);
@@ -71,8 +99,13 @@ public class Intro : MonoBehaviour
         Title_anim.SetBool("Activate", true);
         yield return new WaitForSeconds(1.0f);
         StartCoroutine(AnyKeyText_Scale());
+        introEnd = true;
         yield return new WaitForSeconds(20.0f);
-        AFKState = true;
+        if(isStart == false)
+        {
+            AFKState = true;
+        }
+        
         while(GameTitle.transform.position.y <= 6.4f)
         {
             GameTitle.transform.Translate(0, 1, 0);
