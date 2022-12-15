@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6871290649893276288}
   - component: {fileID: 8385387024839530287}
   - component: {fileID: 9011202180021778996}
+  - component: {fileID: 5182267011875489818}
   m_Layer: 0
   m_Name: Brick
   m_TagString: Ground
@@ -167,3 +168,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5182267011875489818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8088253127585341764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987cde62a0bd02c4fab5d1f7e14db7f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coin: {fileID: 8086415291739418110, guid: 70d274e11065a0b47a840fb839f80025, type: 3}
+  istouch: 0

@@ -6,20 +6,23 @@ public class Block_Ani : MonoBehaviour
 {
     Animator ani;
     private bool playerTouch;
-
+    private bool canTouch = true;
+    Coin coin;
     private void Start()
     {
+        coin = GetComponent<Coin>();
         ani = GetComponent<Animator>();
     }
 
     void Update()
     {
-        if (playerTouch)
+        if (playerTouch && canTouch)
         {
             playerTouch = false;
-
+            
             transform.position += new Vector3(0, 0.1f);
             Invoke("TouchAni2", 0.01666f);
+            canTouch = false;
         }
     }
 
@@ -106,7 +109,7 @@ public class Block_Ani : MonoBehaviour
         {
             if (collision.gameObject.transform.position.y < transform.position.y - 0.3f)
             {
-                Debug.Log("aa");
+                coin.istouch = true;   
                 playerTouch = true;
             }
         }

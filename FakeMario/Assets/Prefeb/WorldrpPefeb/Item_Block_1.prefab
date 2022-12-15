@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4443648631654176245}
   - component: {fileID: 175936956191467681}
   - component: {fileID: 1418123857382407507}
+  - component: {fileID: -6340233037071339398}
   m_Layer: 0
   m_Name: Item_Block_1
   m_TagString: Ground
@@ -167,3 +168,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f4079b2b4002a44979845ec7c748bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-6340233037071339398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494864441642004517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987cde62a0bd02c4fab5d1f7e14db7f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coin: {fileID: 8086415291739418110, guid: 70d274e11065a0b47a840fb839f80025, type: 3}
+  istouch: 0
