@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
     private float Y;
     private bool canDe;
 
+    public bool isPause = false;
+
     void Start()
     {
         temp = jumpPower;
@@ -31,62 +33,66 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C) && canjump == true)
+        if(!isPause)
         {
-            rb.velocity = new Vector2(rb.velocity.x, 0);
-
-            rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-            canjump = false;
-            Invoke("Hold", 0.1f);
-            Invoke("HoldC", 0.3f);
-            Invoke("Yde", 0.2f);
-        }
-        if (Input.GetKey(KeyCode.C))
-        {
-            if (!canHold)
+            if (Input.GetKeyDown(KeyCode.C) && canjump == true)
             {
-                Y = 20;
+                rb.velocity = new Vector2(rb.velocity.x, 0);
+
+                rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+                canjump = false;
+                Invoke("Hold", 0.1f);
+                Invoke("HoldC", 0.3f);
+                Invoke("Yde", 0.2f);
             }
-            if (canDe)
+            if (Input.GetKey(KeyCode.C))
             {
-                Y -= 0.2f;
+                if (!canHold)
+                {
+                    Y = 20;
+                }
+                if (canDe)
+                {
+                    Y -= 0.2f;
+                }
+
+                if (canHold)
+                    rb.velocity = new Vector2(rb.velocity.x, Y);
             }
-                
-            if (canHold)
-                rb.velocity = new Vector2(rb.velocity.x, Y);
-        }
-        if (Input.GetKeyUp(KeyCode.C))
-        {
-            canDe = false;
-            canHold = false;
-            jumpPower = temp;
-        }
+            if (Input.GetKeyUp(KeyCode.C))
+            {
+                canDe = false;
+                canHold = false;
+                jumpPower = temp;
+            }
 
 
 
-        if (Input.GetAxis("Horizontal") == 0 && canjump == true)
-        {
-            Invoke("RunCheck", 3f);
-        }
+            if (Input.GetAxis("Horizontal") == 0 && canjump == true)
+            {
+                Invoke("RunCheck", 3f);
+            }
 
-        if (Input.GetAxis("Horizontal") != 0 && moveSpeed < 7)
-        {
-            moveSpeed = moveSpeed + 4 * Time.deltaTime;
-        }
+            if (Input.GetAxis("Horizontal") != 0 && moveSpeed < 7)
+            {
+                moveSpeed = moveSpeed + 4 * Time.deltaTime;
+            }
 
-        if (rb.velocity.x > 0)
-        {
-            isright = 1;
-        }
-        if (rb.velocity.x < 0)
-        {
-            isright = -1;
-        }
+            if (rb.velocity.x > 0)
+            {
+                isright = 1;
+            }
+            if (rb.velocity.x < 0)
+            {
+                isright = -1;
+            }
 
-        if (rb.velocity.y != 0)
-        {
-            Debug.Log(rb.velocity.y);
+            if (rb.velocity.y != 0)
+            {
+                Debug.Log(rb.velocity.y);
+            }
         }
+        
     }
 
     void Hold() => canHold = true;
@@ -106,8 +112,12 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        Dir = Input.GetAxis("Horizontal") * moveSpeed;
-        rb.velocity = new Vector2(Dir, rb.velocity.y);
+        if(!isPause)
+        {
+            Dir = Input.GetAxis("Horizontal") * moveSpeed;
+            rb.velocity = new Vector2(Dir, rb.velocity.y);
+        }
+       
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -7,16 +7,22 @@ public class BackGroundControl : MonoBehaviour
     Rigidbody2D rb;
     private float Dir;
     [SerializeField] float moveSpeed;
+    Player player;
 
 
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
 
     void Update()
     {
-        Dir = Input.GetAxis("Horizontal");
-        transform.position += new Vector3(Dir, 0, 0) * moveSpeed * Time.deltaTime;
+        if(!player.isPause)
+        {
+            Dir = Input.GetAxis("Horizontal");
+            transform.position += new Vector3(Dir, 0, 0) * moveSpeed * Time.deltaTime;
+        }
+        
     }
 }
