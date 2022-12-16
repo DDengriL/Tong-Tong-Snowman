@@ -18,7 +18,7 @@ public class WallChk : MonoBehaviour
 
     void Update()
     {
-        if (iswall)
+        if (iswall && playerrb.velocity.y < 0)
         {
             playerrb.velocity = new Vector2(playerrb.velocity.x, -7);
         }
