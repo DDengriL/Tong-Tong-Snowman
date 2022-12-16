@@ -17,6 +17,9 @@ public class StageSelect_Intro : MonoBehaviour
     [SerializeField] private Image Black2;
     [SerializeField] private Image Black3;
     [SerializeField] private Image Black4;
+
+
+    public bool introEnd = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,7 +42,7 @@ public class StageSelect_Intro : MonoBehaviour
             CircleTransition.localScale = new Vector3(i, i, i);
             yield return new WaitForSeconds(0.001f);
         }
-
+        introEnd = true;
     }
 
     IEnumerator CircleTransition_Opacity()

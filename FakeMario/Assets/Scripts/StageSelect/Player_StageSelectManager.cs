@@ -10,6 +10,12 @@ public class Player_StageSelectManager : MonoBehaviour
     [SerializeField] private GameObject EscapeMenu;
     [SerializeField] private Material EscapeUIMat;
 
+    [Header("Return To Title UI")]
+    [SerializeField] private GameObject ReturnToTitle_UI;
+
+    [Header("Leaderboard UI")]
+    [SerializeField] private GameObject Leaderboard_UI;
+
     private float OffsetX = 0;
 
     [Header("Save System")]
@@ -18,6 +24,7 @@ public class Player_StageSelectManager : MonoBehaviour
     [SerializeField] private Image SaveCompleteblackScn;
 
     private bool saving = false;
+    private bool leaderboard_open = false;
     private bool saveComplete = false;
 
     [Header("Level 1 Door")]
@@ -38,9 +45,16 @@ public class Player_StageSelectManager : MonoBehaviour
     [Header("Player Script")]
     [SerializeField] private Player player;
 
+    [Header("StageSelect Intro")]
+    [SerializeField] private StageSelect_Intro stageIntro;
+
+    [Header("Leaderboard Manager")]
+    [SerializeField] private Leaderboard_Manager leaderboard_1;
+
     private void Awake()
     {
-        EscapeMenu = GameObject.Find("ESC");
+        ReturnToTitle_UI = GameObject.Find("ReturnToTitle");
+        Debug.Log(ReturnToTitle_UI.name);
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         
     }
@@ -48,6 +62,8 @@ public class Player_StageSelectManager : MonoBehaviour
     void Start()
     {
         EscapeMenu.SetActive(false);
+        Leaderboard_UI.SetActive(false);
+        ReturnToTitle_UI.SetActive(false);
         SaveTextObj.SetActive(false);
         DataLoad();
         if(EscapeUIMat != null)
@@ -79,23 +95,26 @@ public class Player_StageSelectManager : MonoBehaviour
     private void EscapeMenuManager()
     {
 
-        if(!saving)
+        if(!saving && !leaderboard_open)
         {
-            if (EscapeMenu.activeSelf)
+            if(stageIntro.introEnd)
             {
-                if (Input.GetKeyDown(KeyCode.Escape))
+                if (EscapeMenu.activeSelf)
                 {
-                    player.isPause = false; 
-                    EscapeMenu.SetActive(false);
+                    if (Input.GetKeyDown(KeyCode.Escape))
+                    {
+                        player.isPause = false;
+                        EscapeMenu.SetActive(false);
+                    }
                 }
-            }
-            else
-            {
-                if (Input.GetKeyDown(KeyCode.Escape))
+                else
                 {
-                    player.isPause = true;
-                    EscapeMenu.SetActive(true);
+                    if (Input.GetKeyDown(KeyCode.Escape))
+                    {
+                        player.isPause = true;
+                        EscapeMenu.SetActive(true);
 
+                    }
                 }
             }
         }
@@ -103,7 +122,7 @@ public class Player_StageSelectManager : MonoBehaviour
 
     private void EscapeUIOffsetScrolling()
     {
-        if(EscapeMenu.activeSelf)
+        if(EscapeMenu.activeSelf || ReturnToTitle_UI.activeSelf)
         {
             if(OffsetX < 200)
             {
@@ -120,6 +139,8 @@ public class Player_StageSelectManager : MonoBehaviour
     private void DataLoad()
     {
         Level2Unlock = System.Convert.ToBoolean(PlayerPrefs.GetInt("Level2Data"));
+        PlayerPrefs.Save();
+        Debug.Log("Data Loaded");
     }
 
     IEnumerator DataSave()
@@ -128,6 +149,12 @@ public class Player_StageSelectManager : MonoBehaviour
         StartCoroutine(SaveTextOpacity());
         SaveText.text = "저장 중...";
         PlayerPrefs.SetInt("Level2Data", System.Convert.ToInt16(Level2Unlock));
+        for (int i = 0; i < leaderboard_1.rankPlayerCount; i++)
+        {
+            PlayerPrefs.SetString("World 1 " + "Player " + i, leaderboard_1.rankName[i]);
+            PlayerPrefs.SetFloat("World 1" + "Player " + i + " Best Time", leaderboard_1.bestTime[i]);
+        }
+        
         yield return new WaitForSeconds(1.5f);
        SaveText.text = "저장 완료!";
        saveComplete = true;
@@ -192,19 +219,47 @@ public class Player_StageSelectManager : MonoBehaviour
         }
     }
 
-    public void CheckBtn()
+
+    public void EscapeMenu_ReturnToTitle()
     {
+        EscapeMenu.SetActive(false);
+        leaderboard_open = true;
+        ReturnToTitle_UI.SetActive(true);
+    }
+
+    public void EscapeMenu_Leaderboard()
+    {
+        EscapeMenu.SetActive(false);
+        leaderboard_open = true;
+        Leaderboard_UI.SetActive(true);
+    }
+
+    public void Leaderboard_Close()
+    {
+        Leaderboard_UI.SetActive(false);
+        leaderboard_open = false;
+        player.isPause = false;
+    }
+
+    public void TitleCheckBtn()
+    {
+        ReturnToTitle_UI = GameObject.Find("ReturnToTitle");
+        if (ReturnToTitle_UI == null)
+        {
+            Debug.Log("Error");
+        }
         
         saving = true;
-        EscapeMenu.SetActive(false);
+        ReturnToTitle_UI.SetActive(false);
         StartCoroutine(DataSave());
 
     }
 
-    public void CancelBtn()
+    public void TitleCancelBtn()
     {
         player.isPause = false;
-        EscapeMenu.SetActive(false);
+        leaderboard_open = false;
+        ReturnToTitle_UI.SetActive(false);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
