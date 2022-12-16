@@ -7,6 +7,9 @@ public class Coin : MonoBehaviour
     SpriteRenderer sr;
 
     [SerializeField] GameObject coin;
+    
+    Score score;
+    Coin_Text coin_text;
     GameObject coinins;
     public bool istouch = false;
     private bool move = false;
@@ -15,6 +18,8 @@ public class Coin : MonoBehaviour
 
     private void Start()
     {
+        score = GameObject.Find("GameSystemManager").GetComponent<Score>();
+        coin_text = GameObject.Find("GameSystemManager").GetComponent<Coin_Text>();
         sr = GetComponent<SpriteRenderer>();
         coinins = Instantiate(coin);
         coincolor = coinins.GetComponent<SpriteRenderer>().color;
@@ -28,6 +33,8 @@ public class Coin : MonoBehaviour
         if (istouch && cantouch)
         {
             coincolor.a = 1;
+            score.score += 100;
+            coin_text.coin_amount++;
             coinins.GetComponent<SpriteRenderer>().color = coincolor;
             istouch = false;
             cantouch = false;

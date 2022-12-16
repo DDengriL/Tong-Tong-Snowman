@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
+using UnityEngine.Windows.WebCam;
 
 public class Camera : MonoBehaviour
 {
@@ -13,6 +16,7 @@ public class Camera : MonoBehaviour
 
     void Update()
     {
+
         Vector3 finalTarget = new Vector3(target.position.x, yPos, -10);
 
         transform.position = Vector3.SmoothDamp(transform.position,  finalTarget, ref velocity, smoothing);
