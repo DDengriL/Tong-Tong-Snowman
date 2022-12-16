@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
             {
                 if (!canHold)
                 {
-                    Y = 20;
+                    Y = 17;
                 }
                 if (canDe)
                 {
@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
 
             if (Input.GetAxis("Horizontal") != 0 && moveSpeed < 7)
             {
-                moveSpeed = moveSpeed + 4 * Time.deltaTime;
+                moveSpeed = moveSpeed + 5 * Time.deltaTime;
             }
 
             if (rb.velocity.x > 0)

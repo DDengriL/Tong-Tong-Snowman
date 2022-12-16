@@ -18,6 +18,8 @@ public class Coin : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         coinins = Instantiate(coin);
         coincolor = coinins.GetComponent<SpriteRenderer>().color;
+        coincolor.a = 0;
+        coinins.GetComponent<SpriteRenderer>().color = coincolor;
         coinins.transform.position = transform.position;
     }
 
@@ -25,6 +27,8 @@ public class Coin : MonoBehaviour
     {
         if (istouch && cantouch)
         {
+            coincolor.a = 1;
+            coinins.GetComponent<SpriteRenderer>().color = coincolor;
             istouch = false;
             cantouch = false;
             move = true;
