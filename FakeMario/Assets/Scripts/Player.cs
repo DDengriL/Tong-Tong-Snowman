@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
                 }
                 if (canDe)
                 {
-                    Y -= 0.2f;
+                    Y -= 0.1f;
                 }
 
                 if (canHold)
