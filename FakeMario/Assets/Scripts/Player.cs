@@ -6,6 +6,10 @@ using UnityEngine.UIElements;
 public class Player : MonoBehaviour
 {
     Rigidbody2D rb;
+    SpriteRenderer sr;
+    Animator ani;
+
+    Vector2 tmp;
 
     private float Dir;
     [SerializeField] private float moveSpeed;
@@ -25,8 +29,13 @@ public class Player : MonoBehaviour
 
     public bool isPause = false;
 
+    Color color;
+
     void Start()
     {
+        tmp = transform.position;
+        ani = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
         temp = jumpPower;
         rb = GetComponent<Rigidbody2D>();
     }
@@ -35,8 +44,15 @@ public class Player : MonoBehaviour
     {
         if(!isPause)
         {
+            if (canjump == false && rb.velocity.y < -1)
+            {
+                ani.SetBool("islanding", true);
+                ani.SetBool("isjump", false);
+            }
+
             if (Input.GetKeyDown(KeyCode.C) && canjump == true)
             {
+                ani.SetBool("isjump", true);
                 rb.velocity = new Vector2(rb.velocity.x, 0);
 
                 rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
@@ -78,19 +94,29 @@ public class Player : MonoBehaviour
                 moveSpeed = moveSpeed + 5 * Time.deltaTime;
             }
 
-            if (rb.velocity.x > 0)
+            if (rb.velocity.x > 0.5)
             {
-                isright = 1;
+                ani.SetBool("ismove", true);
+                if (rb.velocity.x > 0)
+                {
+                sr.flipX = false;
+                }
             }
-            if (rb.velocity.x < 0)
+            if (rb.velocity.x < 0.5)
             {
-                isright = -1;
+                ani.SetBool("ismove", true);
+                if (rb.velocity.x < 0)
+                {
+                sr.flipX = true;
+                }
+            }
+            if (rb.velocity.x < 0.5 && rb.velocity.x > -0.5)
+            {
+                ani.SetBool("ismove", false);
+                
             }
 
-            if (rb.velocity.y != 0)
-            {
-                Debug.Log(rb.velocity.y);
-            }
+            
         }
         
     }
@@ -120,6 +146,21 @@ public class Player : MonoBehaviour
        
     }
 
+    void respawn()
+    {
+        color.a = 1;
+        sr.color = color;
+        transform.position = tmp;
+    }
+
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Ground")
+        {
+            canjump = true;
+        }   
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         canHold = false;
@@ -127,8 +168,29 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.tag == "Ground")
         {
+            ani.SetBool("islanding", false);
             canjump = true;
         }
+
+        if (collision.gameObject.tag == "deadzone")
+        {
+            color = gameObject.GetComponent<SpriteRenderer>().color;
+            color.a = 0;
+            sr.color = color;
+            Invoke("respawn", 3);
+        }
     }
+
+    private void OnCollisionExit2D(Collision2D collision) 
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            
+            canjump = false;
+        }
+    }
+
+    
+
 
 }

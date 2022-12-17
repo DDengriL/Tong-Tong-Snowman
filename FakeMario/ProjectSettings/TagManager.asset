@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Level1
   - Level2
+  - deadzone
   layers:
   - Default
   - TransparentFX
