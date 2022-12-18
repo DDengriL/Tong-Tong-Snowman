@@ -298,7 +298,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1623157728}
         m_TargetAssemblyTypeName: Player_StageSelectManager, Assembly-CSharp
         m_MethodName: TitleCancelBtn
         m_Mode: 1
@@ -454,7 +454,8 @@ MonoBehaviour:
   - "\uC591\uD604\uBA85"
   - "\uC774\uC740\uCD1D"
   - "\uBC15\uC0C1\uC900"
-  bestTime: []
+  bestScore: 
+  ingame: 0
   rankPlayerCount: 5
 --- !u!4 &314638747
 Transform:
@@ -1207,7 +1208,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1623157728}
         m_TargetAssemblyTypeName: Player_StageSelectManager, Assembly-CSharp
         m_MethodName: Leaderboard_Close
         m_Mode: 1
@@ -1417,7 +1418,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 665061870}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.99999756
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1986,7 +1987,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -712, y: 312.22913}
+  m_AnchoredPosition: {x: -712, y: 312.22983}
   m_SizeDelta: {x: 226.6625, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &980459147
@@ -4241,6 +4242,11 @@ Transform:
   m_Father: {fileID: 1870840738}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1279992676 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9115775052617131751, guid: 954dfad74dc7e704880df329b3a14cb6, type: 3}
+  m_PrefabInstance: {fileID: 1623157721}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1307742211
 GameObject:
   m_ObjectHideFlags: 0
@@ -4585,7 +4591,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1623157728}
         m_TargetAssemblyTypeName: Player_StageSelectManager, Assembly-CSharp
         m_MethodName: EscapeMenu_ReturnToTitle
         m_Mode: 1
@@ -5073,6 +5079,43 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9115775052617131747, guid: 954dfad74dc7e704880df329b3a14cb6, type: 3}
   m_PrefabInstance: {fileID: 1623157721}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1623157724 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9115775052617131744, guid: 954dfad74dc7e704880df329b3a14cb6, type: 3}
+  m_PrefabInstance: {fileID: 1623157721}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1279992676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 635c8ec81c5216243b71b194cc04c58b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1623157728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1279992676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b72650a5e6d9b8944984d9e32399b2b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EscapeMenu: {fileID: 1870840737}
+  EscapeUIMat: {fileID: 2100000, guid: 38ec23530cdcc374fb055640b0643b66, type: 2}
+  ReturnToTitle_UI: {fileID: 291717697}
+  Leaderboard_UI: {fileID: 298515532}
+  SaveText: {fileID: 1187127917}
+  SaveTextObj: {fileID: 1187127915}
+  SaveCompleteblackScn: {fileID: 878529317}
+  Level_1_Door: {fileID: 785863076}
+  Level_2_Door: {fileID: 1597058320}
+  Level2Unlock: 0
+  player: {fileID: 1623157724}
+  stageIntro: {fileID: 406869043}
+  leaderboard_1: {fileID: 314638746}
+  Leaderboard_manager: {fileID: 314638745}
 --- !u!1 &1759880614
 GameObject:
   m_ObjectHideFlags: 0
@@ -5234,7 +5277,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1623157728}
         m_TargetAssemblyTypeName: Player_StageSelectManager, Assembly-CSharp
         m_MethodName: EscapeMenu_Leaderboard
         m_Mode: 1
@@ -5368,7 +5411,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1623157728}
         m_TargetAssemblyTypeName: Player_StageSelectManager, Assembly-CSharp
         m_MethodName: TitleCheckBtn
         m_Mode: 1

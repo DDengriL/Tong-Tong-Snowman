@@ -2,9 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+
+    Stage1_Goal st1_goal;
+
+    [Header("Jump Key")]
+    [SerializeField]
+    private KeyCode jumpKey = KeyCode.C;
+
     Rigidbody2D rb;
     SpriteRenderer sr;
     Animator ani;
@@ -27,12 +35,18 @@ public class Player : MonoBehaviour
     private float Y;
     private bool canDe;
 
+    public bool isArrive = false;
     public bool isPause = false;
 
     Color color;
 
     void Start()
     {
+        if(SceneManager.GetActiveScene().name == "Level2")
+        {
+            st1_goal = GameObject.Find("Goal").GetComponent<Stage1_Goal>();
+        }
+        
         tmp = transform.position;
         ani = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
@@ -42,7 +56,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if(!isPause)
+        if(!isPause && !isArrive)
         {
             if (canjump == false && rb.velocity.y < -1)
             {
@@ -50,7 +64,7 @@ public class Player : MonoBehaviour
                 ani.SetBool("isjump", false);
             }
 
-            if (Input.GetKeyDown(KeyCode.C) && canjump == true)
+            if (Input.GetKeyDown(jumpKey) && canjump == true)
             {
                 ani.SetBool("isjump", true);
                 rb.velocity = new Vector2(rb.velocity.x, 0);
@@ -138,7 +152,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(!isPause)
+        if(!isPause && !isArrive)
         {
             Dir = Input.GetAxis("Horizontal") * moveSpeed;
             rb.velocity = new Vector2(Dir, rb.velocity.y);
@@ -179,6 +193,9 @@ public class Player : MonoBehaviour
             sr.color = color;
             Invoke("respawn", 3);
         }
+
+
+        
     }
 
     private void OnCollisionExit2D(Collision2D collision) 
@@ -190,7 +207,16 @@ public class Player : MonoBehaviour
         }
     }
 
-    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.name == "Goal")
+        {
+            StartCoroutine(st1_goal.Goal());
+            st1_goal.isGoal = true;
+        }
+    }
+
+
 
 
 }

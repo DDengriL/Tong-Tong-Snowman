@@ -8,13 +8,15 @@ public class Timer : MonoBehaviour
     [Header("Timer Text")]
     [SerializeField] private Text timer_text;
 
-    private int min = 0;
-    private float sec = 0;
+    Stage1_Goal st1_goal;
+    
+    public int min = 6;
+    public float sec = 0;
    
     // Start is called before the first frame update
     void Start()
     {
-        
+        st1_goal = GameObject.Find("Goal").GetComponent<Stage1_Goal>();
     }
 
     // Update is called once per frame
@@ -27,15 +29,17 @@ public class Timer : MonoBehaviour
 
     private void TimerStart()
     {
-        if((int)sec == 60)
+        if(!st1_goal.isGoal)
         {
-            min++;
-            sec = 0;
+            if (sec <= 0)
+            {
+                min--;
+                sec = 60;
+            }
+            else
+            {
+                sec -= Time.deltaTime;
+            }
         }
-        else
-        {
-            sec += Time.deltaTime;
-        }
-       
     }
 }
