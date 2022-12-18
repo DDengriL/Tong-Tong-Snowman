@@ -50,6 +50,7 @@ public class Player_StageSelectManager : MonoBehaviour
 
     [Header("Leaderboard Manager")]
     [SerializeField] private Leaderboard_Manager leaderboard_1;
+    [SerializeField] private GameObject Leaderboard_manager;
 
     private void Awake()
     {
@@ -152,7 +153,7 @@ public class Player_StageSelectManager : MonoBehaviour
         for (int i = 0; i < leaderboard_1.rankPlayerCount; i++)
         {
             PlayerPrefs.SetString("World 1 " + "Player " + i, leaderboard_1.rankName[i]);
-            PlayerPrefs.SetFloat("World 1" + "Player " + i + " Best Time", leaderboard_1.bestTime[i]);
+            PlayerPrefs.SetFloat("World 1" + "Player " + i + " Best Score", leaderboard_1.bestScore[i]);
         }
         
         yield return new WaitForSeconds(1.5f);
@@ -203,7 +204,8 @@ public class Player_StageSelectManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                Debug.LogError("Player entered Level 1");
+                DontDestroyOnLoad(Leaderboard_manager);
+                SceneManager.LoadScene("Level2");
             }
         }
     }
