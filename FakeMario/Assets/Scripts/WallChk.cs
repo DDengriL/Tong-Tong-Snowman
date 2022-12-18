@@ -8,17 +8,19 @@ public class WallChk : MonoBehaviour
 {
     [SerializeField] Rigidbody2D playerrb;
 
+    GroundChk gchk;
+
     private bool iswall;
 
 
     void Start()
     {
-
+        gchk = GameObject.Find("GroundChk").GetComponent<GroundChk>();
     }
 
     void Update()
     {
-        if (iswall && playerrb.velocity.y < 0)
+        if (iswall && !gchk.isGround)
         {
             playerrb.velocity = new Vector2(playerrb.velocity.x, -7);
         }

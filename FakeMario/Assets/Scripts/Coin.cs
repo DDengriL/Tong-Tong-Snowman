@@ -22,6 +22,7 @@ public class Coin : MonoBehaviour
         coin_text = GameObject.Find("GameSystemManager").GetComponent<Coin_Text>();
         sr = GetComponent<SpriteRenderer>();
         coinins = Instantiate(coin);
+        coinins.transform.parent = this.transform;
         coincolor = coinins.GetComponent<SpriteRenderer>().color;
         coincolor.a = 0;
         coinins.GetComponent<SpriteRenderer>().color = coincolor;
@@ -32,10 +33,13 @@ public class Coin : MonoBehaviour
     {
         if (istouch && cantouch)
         {
+            if (coin.gameObject.name == "Coin")
+            {
+                score.score += 100;
+                coin_text.coin_amount++;
+
+            }
             coincolor.a = 1;
-            score.score += 100;
-            coin_text.coin_amount++;
-            coinins.GetComponent<SpriteRenderer>().color = coincolor;
             istouch = false;
             cantouch = false;
             move = true;
@@ -44,11 +48,27 @@ public class Coin : MonoBehaviour
         if (move)
         {
             coinins.transform.position += new Vector3(0, 3) * Time.deltaTime;
-            if (coinins.transform.position.y >= transform.position.y + 0.6f)
+            if (coin.gameObject.name == "Coin")
             {
-                coincolor.a -= 0.01f;
-                coinins.GetComponent<SpriteRenderer>().color = coincolor;
+                if (coinins.transform.position.y >= transform.position.y + 0.6f)
+                {
+                    coincolor.a -= 0.01f;
+                    coinins.GetComponent<SpriteRenderer>().color = coincolor;
+                    if (coincolor.a == 0)
+                    {
+                        move = false;
+                    }
+                }   
             }
+            else if (coin.gameObject.name != "Coin")
+            {
+                if (coinins.transform.position.y >= transform.position.y + 0.6f)
+                {
+                    coinins.GetComponent<SpriteRenderer>().color = coincolor;
+                    move = false;
+                }
+            }
+
         }
         
 
