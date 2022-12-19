@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEditor.Rendering;
 
 public class Player_StageSelectManager : MonoBehaviour
 {
@@ -21,6 +22,11 @@ public class Player_StageSelectManager : MonoBehaviour
 
     private float OffsetX = 0;
 
+    [Header("Stage Select Level Text")]
+    [SerializeField] private SpriteRenderer level1_text;
+    private bool istxtshow = false;
+
+
     [Header("Data Reset System")]
     [SerializeField] private Text DataResetText;
     [SerializeField] private GameObject DataReset_Obj;
@@ -34,6 +40,7 @@ public class Player_StageSelectManager : MonoBehaviour
     private bool saving = false;
     private bool leaderboard_open = false;
     private bool saveComplete = false;
+    private bool enterlevel1 = false;
 
     [Header("Level 1 Door")]
     [SerializeField] private SpriteRenderer Level_1_Door;
@@ -48,6 +55,7 @@ public class Player_StageSelectManager : MonoBehaviour
 
     [Header("Level Unlock")]
     public bool Level2Unlock;
+    [SerializeField] private Animator level2_lock;
 
 
     [Header("Player Script")]
@@ -256,7 +264,7 @@ public class Player_StageSelectManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 DontDestroyOnLoad(Leaderboard_manager);
-                SceneManager.LoadScene("Level2");
+                SceneManager.LoadScene("Level1");
             }
         }
     }
@@ -333,15 +341,44 @@ public class Player_StageSelectManager : MonoBehaviour
                 Debug.LogError("player reached level 2 door");
             }
         }
+        else
+        {
+            if(collision.gameObject.tag == "Level2" || collision.gameObject.name == "level2lock")
+            {
+                if (Input.GetKeyDown(KeyCode.UpArrow))
+                    StartCoroutine(level2lock_touch());
+            }
+        }
+    }
+
+    IEnumerator level2lock_touch()
+    {
+        
+            level2_lock.SetBool("istouch", true);
+            yield return new WaitForSeconds(1.5f);
+            level2_lock.SetBool("istouch", false);
+        
+            
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Level1")
+        {
+            istxtshow = true;
+            StopCoroutine(level1Text_hide());
+            StartCoroutine(level1Text_show());
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Level1")
         {
+            istxtshow = false;
             Level1_Enable = false;
             Level_1_Door.color = new Color32(100, 100, 100, 255);
-
+            StopCoroutine(level1Text_show());
+            StartCoroutine(level1Text_hide());
         }
 
         if(Level2Unlock)
@@ -352,6 +389,38 @@ public class Player_StageSelectManager : MonoBehaviour
                 Level_2_Door.color = Color.white;
                 Debug.LogError("player exited level 2 door");
             }
+        }
+        
+        
+    }
+
+    IEnumerator level1Text_show()
+    {
+        Color color = level1_text.color;
+        for(float i = color.a; i <= 1.0f; i += 0.01f)
+        {
+            if(istxtshow)
+            {
+                color.a = i;
+                level1_text.color = color;
+                yield return new WaitForSeconds(0.001f);
+            }
+            
+        }
+    }
+
+    IEnumerator level1Text_hide()
+    {
+        Color color = level1_text.color;
+        for(float i = color.a; i >= 0.0f; i -= 0.01f)
+        {
+            if(!istxtshow)
+            {
+                color.a = i;
+                level1_text.color = color;
+                yield return new WaitForSeconds(0.001f);
+            }
+            
         }
     }
 }

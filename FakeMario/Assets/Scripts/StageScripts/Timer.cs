@@ -17,7 +17,7 @@ public class Timer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(SceneManager.GetActiveScene().name == "Level2")
+        if(SceneManager.GetActiveScene().name == "Level1")
         st1_goal = GameObject.Find("Goal").GetComponent<Stage1_Goal>();
 
         if(st1_goal == null)
@@ -30,9 +30,9 @@ public class Timer : MonoBehaviour
     void Update()
     {
         if(SceneManager.GetActiveScene().name == "Level1")
-            TimerStart2();
-        if (SceneManager.GetActiveScene().name == "Level2")
             TimerStart1();
+        if (SceneManager.GetActiveScene().name == "Level2")
+            TimerStart2();
         timer_text.text = string.Format("{0:D2} : {1:D2}", min, (int)sec);
     }
 

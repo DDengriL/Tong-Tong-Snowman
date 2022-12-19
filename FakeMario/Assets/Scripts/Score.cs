@@ -20,7 +20,7 @@ public class Score : MonoBehaviour
             score_text = null;
         }
         timer = GetComponent<Timer>();
-        if(SceneManager.GetActiveScene().name == "Level2")
+        if(SceneManager.GetActiveScene().name == "Level1")
         goal = GameObject.Find("Goal").GetComponent<Stage1_Goal>();
     }
 

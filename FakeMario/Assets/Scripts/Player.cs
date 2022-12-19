@@ -9,6 +9,10 @@ public class Player : MonoBehaviour
 
     Stage1_Goal st1_goal;
 
+    FakeGoal_Trap fakegoaltrap;
+
+    Score score;
+
     GroundChk gchk;
 
     [Header("Jump Key")]
@@ -47,9 +51,14 @@ public class Player : MonoBehaviour
     {
         gchk = GetComponentInChildren<GroundChk>();
         audio = GetComponent<AudioSource>();
-        if(SceneManager.GetActiveScene().name == "Level2")
+        if(SceneManager.GetActiveScene().name == "Level1")
         {
             st1_goal = GameObject.Find("Goal").GetComponent<Stage1_Goal>();
+            score = GameObject.Find("ScoreManager").GetComponent<Score>();
+        }
+        if(SceneManager.GetActiveScene().name == "Level1")
+        {
+            fakegoaltrap = GameObject.Find("Fake_Goal").GetComponent<FakeGoal_Trap>();
         }
         
         tmp = transform.position;
@@ -231,12 +240,22 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.name == "Goal")
         {
-            if(SceneManager.GetActiveScene().name == "Level2")
+            if(SceneManager.GetActiveScene().name == "Level1")
             {
                 StartCoroutine(st1_goal.Goal());
                 st1_goal.isGoal = true;
             }
            
+            isArrive = true;
+        }
+        if(collision.gameObject.name == "Goal_Bonus")
+        {
+            score.score += 500;
+        }
+
+        if(collision.gameObject.name == "Fake_Goal")
+        {
+            StartCoroutine(fakegoaltrap.FakeGoal());
             isArrive = true;
         }
 
