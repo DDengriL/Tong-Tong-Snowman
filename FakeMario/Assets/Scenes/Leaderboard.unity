@@ -1147,8 +1147,10 @@ MonoBehaviour:
   register_btn: {fileID: 902837441}
   Loading_Process: {fileID: 847840703}
   loading_text: {fileID: 1511482995}
+  scoreboard_obj: {fileID: 0}
   blackimg: {fileID: 32804349}
   leader_manager: {fileID: 0}
+  Leaderboad_obj: {fileID: 0}
 --- !u!1 &847840703
 GameObject:
   m_ObjectHideFlags: 0
@@ -1751,7 +1753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 38ec23530cdcc374fb055640b0643b66, type: 2}
+  m_Material: {fileID: 2100000, guid: 36a1ca6b7e57632438ca4434596ac08b, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
