@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
 
     public bool isArrive = false;
     public bool isPause = false;
+    public bool enterlevel1 = false;
 
     Color color;
 
@@ -70,7 +71,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if(!isPause && !isArrive)
+        if(!isPause && !isArrive && !enterlevel1)
         {
             if (canjump == false && rb.velocity.y < -1)
             {
@@ -175,7 +176,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(!isPause && !isArrive)
+        if(!isPause && !isArrive && !enterlevel1)
         {
             Dir = Input.GetAxis("Horizontal") * moveSpeed;
             rb.velocity = new Vector2(Dir, rb.velocity.y);
