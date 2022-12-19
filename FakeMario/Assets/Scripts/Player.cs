@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
 
     Stage1_Goal st1_goal;
 
+    GroundChk gchk;
+
     [Header("Jump Key")]
     [SerializeField]
     private KeyCode jumpKey = KeyCode.Space;
@@ -16,6 +18,7 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
     SpriteRenderer sr;
     Animator ani;
+    AudioSource audio;
 
     Vector2 tmp;
 
@@ -42,6 +45,8 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        gchk = GetComponentInChildren<GroundChk>();
+        audio = GetComponent<AudioSource>();
         if(SceneManager.GetActiveScene().name == "Level2")
         {
             st1_goal = GameObject.Find("Goal").GetComponent<Stage1_Goal>();
@@ -110,6 +115,10 @@ public class Player : MonoBehaviour
 
             if (rb.velocity.x > 0.5)
             {
+                if (!audio.isPlaying && gchk.isGround)
+                {
+                    audio.Play();
+                }
                 ani.SetBool("ismove", true);
                 if (rb.velocity.x > 0)
                 {
@@ -118,6 +127,10 @@ public class Player : MonoBehaviour
             }
             if (rb.velocity.x < 0.5)
             {
+                if (!audio.isPlaying && gchk.isGround)
+                {
+                    audio.Play();
+                }
                 ani.SetBool("ismove", true);
                 if (rb.velocity.x < 0)
                 {
@@ -126,6 +139,7 @@ public class Player : MonoBehaviour
             }
             if (rb.velocity.x < 0.5 && rb.velocity.x > -0.5)
             {
+                audio.Stop();
                 ani.SetBool("ismove", false);
                 
             }
@@ -185,15 +199,12 @@ public class Player : MonoBehaviour
             ani.SetBool("islanding", false);
             canjump = true;
         }
-
-        
-
-
-        
     }
 
     
-    IEnumerator Respawn()
+
+    
+    public IEnumerator Respawn()
     {
         yield return new WaitForSeconds(2.0f);
         if(SceneManager.GetActiveScene().name == "Level1")
@@ -232,6 +243,7 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.tag == "deadzone")
         {
+            gameObject.layer = 8;
             StartCoroutine(Respawn());
         }
     }
