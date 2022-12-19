@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Score : MonoBehaviour
@@ -15,6 +16,7 @@ public class Score : MonoBehaviour
     void Start()
     {
         timer = GetComponent<Timer>();
+        if(SceneManager.GetActiveScene().name == "Level2")
         goal = GameObject.Find("Goal").GetComponent<Stage1_Goal>();
     }
 
