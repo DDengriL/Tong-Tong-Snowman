@@ -212,7 +212,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.name == "Goal")
         {
             StartCoroutine(st1_goal.Goal());
-            st1_goal.isGoal = true;
+            isArrive = true;
         }
     }
 
