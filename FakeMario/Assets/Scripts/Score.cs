@@ -29,9 +29,9 @@ public class Score : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "Leaderboard")
         {
-            score_text.text = "";
+            score_text = null;
         }
-        if(SceneManager.GetActiveScene().name != "StageSelect")
+        if(SceneManager.GetActiveScene().name != "StageSelect" && SceneManager.GetActiveScene().name != "Leaderboard")
         {
             score_text.text = string.Format("{0:D8}", score);
         }

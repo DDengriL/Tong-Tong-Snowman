@@ -297,7 +297,7 @@ public class Player_StageSelectManager : MonoBehaviour
     {
         player.enterlevel1 = true;
         StartCoroutine(player_opacity());
-        for (float i = 3.0f; i >= 0.05f; i -= 0.005f)
+        for (float i = 3.0f; i >= 0.05f; i -= 0.01f)
         {
             CircleTransition.localScale = new Vector3(i, i, i);
             yield return new WaitForSeconds(0.001f);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEditor.Rendering.LookDev;
+
 
 public class Leaderboard_Manager : MonoBehaviour
 {

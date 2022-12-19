@@ -39,8 +39,13 @@ public class Timer : MonoBehaviour
 
     private void TimerStart1()
     {
+        if(min == 0 && sec == 0 && !st1_goal.isGoal)
+        {
+            SceneManager.LoadScene("Level1");
+        }
         if (!st1_goal.isGoal)
         {
+            
             if (sec <= 0)
             {
                 min--;
