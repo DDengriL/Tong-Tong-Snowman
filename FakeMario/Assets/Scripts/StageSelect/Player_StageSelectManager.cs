@@ -16,7 +16,15 @@ public class Player_StageSelectManager : MonoBehaviour
     [Header("Leaderboard UI")]
     [SerializeField] private GameObject Leaderboard_UI;
 
+    [Header("Data Reset UI")]
+    [SerializeField] private GameObject Data_Reset_UI;
+
     private float OffsetX = 0;
+
+    [Header("Data Reset System")]
+    [SerializeField] private Text DataResetText;
+    [SerializeField] private GameObject DataReset_Obj;
+    [SerializeField] private Image DataResetCompleteBlackScrn;
 
     [Header("Save System")]
     [SerializeField] private Text SaveText;
@@ -44,6 +52,7 @@ public class Player_StageSelectManager : MonoBehaviour
 
     [Header("Player Script")]
     [SerializeField] private Player player;
+    [SerializeField] private Animator player_anim;
 
     [Header("StageSelect Intro")]
     [SerializeField] private StageSelect_Intro stageIntro;
@@ -65,6 +74,8 @@ public class Player_StageSelectManager : MonoBehaviour
         EscapeMenu.SetActive(false);
         Leaderboard_UI.SetActive(false);
         ReturnToTitle_UI.SetActive(false);
+        Data_Reset_UI.SetActive(false);
+        DataReset_Obj.SetActive(false);
         SaveTextObj.SetActive(false);
         DataLoad();
         if(EscapeUIMat != null)
@@ -83,10 +94,18 @@ public class Player_StageSelectManager : MonoBehaviour
         StageSelecting();
         EscapeUIOffsetScrolling();
         EscapeMenuManager();
-
+        PlayerAnimation();
         
     }
-
+    private void PlayerAnimation()
+    {
+        if (EscapeMenu.activeSelf)
+        {
+            player_anim.SetBool("isjump", false);
+            player_anim.SetBool("islanding", false);
+            player_anim.SetBool("ismove", false);
+        }
+    }
     private void StageSelecting()
     {
         Level1();
@@ -165,7 +184,39 @@ public class Player_StageSelectManager : MonoBehaviour
         
     }
 
-  
+     public void Escape_Menu_Data_Reset_Btn()
+    {
+        EscapeMenu.SetActive(false);
+        Data_Reset_UI.SetActive(true);
+    }
+
+    public void Data_Reset_Cancel_Btn()
+    {
+        Data_Reset_UI.SetActive(false);
+        player.isPause = false;
+    }
+    public void Data_Reset_Check_Btn()
+    {
+        StartCoroutine(Data_Reset());
+    }
+
+    IEnumerator Data_Reset()
+    {
+        Data_Reset_UI.SetActive(false);
+        DataReset_Obj.SetActive(true);
+        DataResetText.text = "데이터 초기화 중...";
+        for (int i = 0; i <= leaderboard_1.bestScore.Length; i++)
+        {
+            PlayerPrefs.DeleteKey("World 1 " + "Player " + i);
+            PlayerPrefs.DeleteKey("World 1 " + "Player " + i + " Best Score");
+        }
+        PlayerPrefs.DeleteKey("Level2Data");
+        PlayerPrefs.DeleteKey("rankPlayerCount");
+        yield return new WaitForSeconds(1.5f);
+        DataResetText.text = "데이터 초기화 완료!";
+        yield return new WaitForSeconds(1.5f);
+        StartCoroutine(SaveCompleteFade());
+    }
     IEnumerator SaveCompleteFade()
     {
         Color color = SaveCompleteblackScn.color;
@@ -269,8 +320,8 @@ public class Player_StageSelectManager : MonoBehaviour
         if(collision.gameObject.tag == "Level1")
         {
             Level1_Enable = true;
-            Level_1_Door.color = Color.green;
-            Debug.LogError("player reached level 1 door");
+            Level_1_Door.color = new Color32(255, 255, 255, 255);
+            
         }
 
         if(Level2Unlock)
@@ -289,8 +340,8 @@ public class Player_StageSelectManager : MonoBehaviour
         if (collision.gameObject.tag == "Level1")
         {
             Level1_Enable = false;
-            Level_1_Door.color = Color.white;
-            Debug.LogError("player exited level 1 door");
+            Level_1_Door.color = new Color32(100, 100, 100, 255);
+
         }
 
         if(Level2Unlock)

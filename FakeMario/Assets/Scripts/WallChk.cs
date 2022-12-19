@@ -16,6 +16,7 @@ public class WallChk : MonoBehaviour
     void Start()
     {
         gchk = GameObject.Find("GroundChk").GetComponent<GroundChk>();
+       
     }
 
     void Update()

@@ -19,12 +19,20 @@ public class Timer : MonoBehaviour
     {
         if(SceneManager.GetActiveScene().name == "Level2")
         st1_goal = GameObject.Find("Goal").GetComponent<Stage1_Goal>();
+
+        if(st1_goal == null)
+        {
+            Debug.Log("im null");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        TimerStart2();
+        if(SceneManager.GetActiveScene().name == "Level1")
+            TimerStart2();
+        if (SceneManager.GetActiveScene().name == "Level2")
+            TimerStart1();
         timer_text.text = string.Format("{0:D2} : {1:D2}", min, (int)sec);
     }
 

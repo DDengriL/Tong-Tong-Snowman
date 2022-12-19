@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
 
     [Header("Jump Key")]
     [SerializeField]
-    private KeyCode jumpKey;
+    private KeyCode jumpKey = KeyCode.Space;
 
     Rigidbody2D rb;
     SpriteRenderer sr;
@@ -25,13 +25,13 @@ public class Player : MonoBehaviour
 
     [SerializeField] float Wdis;
 
-    private int isright;
+    // ³Í ³ª°¡¶ó
     private bool canjump = false;
     private bool canHold = false;
 
     private float temp;
 
-    private float F = 0.01666f;
+    
     private float Y;
     private bool canDe;
 
@@ -220,7 +220,12 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.name == "Goal")
         {
-            StartCoroutine(st1_goal.Goal());
+            if(SceneManager.GetActiveScene().name == "Level2")
+            {
+                StartCoroutine(st1_goal.Goal());
+                st1_goal.isGoal = true;
+            }
+           
             isArrive = true;
         }
 

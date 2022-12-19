@@ -10,52 +10,105 @@ public class Leaderboard_Manager : MonoBehaviour
     [Header("Leaderboard List")]
     [SerializeField] public string[] rankName;
     [SerializeField] public int[] bestScore;
-    private Text rankPlayer = null;
+    [SerializeField] private Text rankPlayer;
     private ScrollRect scroll_rect = null;
     public bool ingame = false;
 
 
-    public int rankPlayerCount = 0;
+    public int rankPlayerCount = 1;
     private int tmp;
+    private string tmp_String;
+
+    private void Awake()
+    {
+        
+        if(rankPlayer == null)
+        {
+            Debug.Log(rankPlayer);
+        }
+    }
     private void Start()
     {
         
-        LoadPlayer();
+            LoadPlayer();
+        
         
     }
 
+    private void Update()
+    {
+        //rankName = new string[rankPlayerCount];
+        //bestScore = new int[rankPlayerCount];
+        //Debug.Log(rankPlayer);
+    }
+
+    // 플레이어 데이터 불러오기
     private void LoadPlayer()
     {
-        rankPlayerCount = PlayerPrefs.GetInt("rankPlayerCount");
+        if(PlayerPrefs.HasKey("rankPlayerCount") == false)
+        {
+            rankPlayerCount = 1;
+        }
+        else
+        {
+            rankPlayerCount = PlayerPrefs.GetInt("rankPlayerCount");
+        }
+        
+
+        
         rankName = new string[rankPlayerCount];
         bestScore = new int[rankPlayerCount];
-        for (int i = 0; i < rankPlayerCount; i++)
+        if (SceneManager.GetActiveScene().name != "Leaderboard")
         {
-            rankName[i] = PlayerPrefs.GetString("World 1 " + "Player " + i);
-            bestScore[i] = PlayerPrefs.GetInt("World 1 " + "Player " + i + " Best Score");
-        }
-        for(int i = 0; i < rankPlayerCount; i++)
-        {
-            for(int j = 0; j < rankPlayerCount - 1; j++)
+
+            for (int i = 0; i < rankPlayerCount - 1; i++)
             {
-                if (bestScore[j] > bestScore[j + 1])
+                if (PlayerPrefs.HasKey("World 1 " + "Player " + i) && PlayerPrefs.HasKey("World 1 " + "Player " + i + " Best Score"))
                 {
-                    tmp = bestScore[j];
-                    bestScore[j] = bestScore[j + 1];
-                    bestScore[j + 1] = tmp;
+                    rankName[i] = PlayerPrefs.GetString("World 1 " + "Player " + i);
+                    bestScore[i] = PlayerPrefs.GetInt("World 1 " + "Player " + i + " Best Score");
                 }
+                else
+                {
+                    break;
+                }
+
             }
-        }
-        if(!ingame)
-        {
-            SyncText();
+
+            Debug.Log(bestScore.Length);
+            for (int i = 0; i < bestScore.Length-1; i++)
+            {
+                int max = i;
+                for (int j = i + 1; j < bestScore.Length; j++)
+                {
+                    Debug.Log(bestScore[j]);
+                    if (bestScore[j] > bestScore[max])      
+                    {
+                        max = j;
+                    }
+                }
+                Debug.Log(bestScore[i]);
+                tmp = bestScore[i];
+                tmp_String = rankName[i];
+                bestScore[i] = bestScore[max];
+                rankName[i] = rankName[max];
+                bestScore[max] = tmp;
+                rankName[max] = tmp_String;
+                //PlayerPrefs.SetInt("World 1 " + "Player " + i + " Best Score", bestScore[i]);
+            }
+            if (!ingame)
+            {
+                if (PlayerPrefs.HasKey("World 1 " + "Player " + 0) && PlayerPrefs.HasKey("World 1 " + "Player " + 0 + " Best Score"))
+                    SyncText();
+            }
         }
     }
 
     private void SyncText()
     {
-        for(int i = 0; i < rankPlayerCount; i++)
+        for(int i = 0; i < rankName.Length -1; i++)
         {
+            
             rankPlayer.text += $"{i + 1}\t\t\t\t\t\t{rankName[i]}\t\t\t\t\t\t{bestScore[i]}\n";
         }
         if(scroll_rect != null)

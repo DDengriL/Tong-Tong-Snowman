@@ -28,10 +28,10 @@ public class Stage1_Goal : MonoBehaviour
     private void Start()
     {
         timer = GameObject.Find("GameSystemManager").GetComponent<Timer>();
-        score = GameObject.Find("GameSystemManager").GetComponent<Score>();
+        score = GameObject.Find("ScoreManager").GetComponent<Score>();
         blacksrn.SetActive(false);
     }
-
+    
     public IEnumerator Goal()
     {
         player_rigid.gravityScale = 0;
