@@ -10,6 +10,8 @@ TagManager:
   - deadzone
   - Goal
   - Goal_Bonus
+  - Enemy
+  - DirSwitch
   layers:
   - Default
   - TransparentFX
@@ -18,9 +20,9 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
-  - 
-  - 
+  - doDeath
+  - Player
+  - none
   - 
   - 
   - 

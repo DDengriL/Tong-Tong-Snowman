@@ -14,6 +14,14 @@ public class Level2_BlockFallDown : MonoBehaviour
         
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            isCollision = true;
+        }
+    }
+
     private void Update()
     {
         if(isCollision)
