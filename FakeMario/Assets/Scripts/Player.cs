@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
 
     [Header("Jump Key")]
     [SerializeField]
-    private KeyCode jumpKey = KeyCode.C;
+    private KeyCode jumpKey;
 
     Rigidbody2D rb;
     SpriteRenderer sr;
@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
                 Invoke("HoldC", 0.3f);
                 Invoke("Yde", 0.2f);
             }
-            if (Input.GetKey(KeyCode.C))
+            if (Input.GetKey(jumpKey))
             {
                 if (!canHold)
                 {
@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
                 if (canHold)
                     rb.velocity = new Vector2(rb.velocity.x, Y);
             }
-            if (Input.GetKeyUp(KeyCode.C))
+            if (Input.GetKeyUp(jumpKey))
             {
                 canDe = false;
                 canHold = false;
@@ -186,17 +186,26 @@ public class Player : MonoBehaviour
             canjump = true;
         }
 
-        if (collision.gameObject.tag == "deadzone")
-        {
-            color = gameObject.GetComponent<SpriteRenderer>().color;
-            color.a = 0;
-            sr.color = color;
-            Invoke("respawn", 3);
-        }
+        
 
 
         
     }
+
+    
+    IEnumerator Respawn()
+    {
+        yield return new WaitForSeconds(2.0f);
+        if(SceneManager.GetActiveScene().name == "Level1")
+        {
+            SceneManager.LoadScene("Level1");
+        }
+        if(SceneManager.GetActiveScene().name == "Level2")
+        {
+            SceneManager.LoadScene("Level2");
+        }
+    }
+
 
     private void OnCollisionExit2D(Collision2D collision) 
     {
@@ -213,6 +222,12 @@ public class Player : MonoBehaviour
         {
             StartCoroutine(st1_goal.Goal());
             st1_goal.isGoal = true;
+        }
+
+
+        if (collision.gameObject.tag == "deadzone")
+        {
+            StartCoroutine(Respawn());
         }
     }
 
