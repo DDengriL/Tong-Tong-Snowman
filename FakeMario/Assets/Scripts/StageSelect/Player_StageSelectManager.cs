@@ -20,6 +20,12 @@ public class Player_StageSelectManager : MonoBehaviour
     [Header("Data Reset UI")]
     [SerializeField] private GameObject Data_Reset_UI;
 
+    [Header("Player Info")]
+    SpriteRenderer player_sprite;
+    [SerializeField] private GameObject enterLevelBlack;
+   
+
+
     private float OffsetX = 0;
 
     [Header("Stage Select Level Text")]
@@ -57,6 +63,8 @@ public class Player_StageSelectManager : MonoBehaviour
     public bool Level2Unlock;
     [SerializeField] private Animator level2_lock;
 
+    [Header("Intro Circle Transition")]
+    [SerializeField] private RectTransform CircleTransition;
 
     [Header("Player Script")]
     [SerializeField] private Player player;
@@ -72,6 +80,9 @@ public class Player_StageSelectManager : MonoBehaviour
     private void Awake()
     {
         ReturnToTitle_UI = GameObject.Find("ReturnToTitle");
+        player_sprite = GetComponent<SpriteRenderer>();
+        
+        
         Debug.Log(ReturnToTitle_UI.name);
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         
@@ -79,6 +90,7 @@ public class Player_StageSelectManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        enterLevelBlack.SetActive(false);
         EscapeMenu.SetActive(false);
         Leaderboard_UI.SetActive(false);
         ReturnToTitle_UI.SetActive(false);
@@ -150,7 +162,7 @@ public class Player_StageSelectManager : MonoBehaviour
 
     private void EscapeUIOffsetScrolling()
     {
-        if(EscapeMenu.activeSelf || ReturnToTitle_UI.activeSelf)
+        if(EscapeMenu.activeSelf || ReturnToTitle_UI.activeSelf || Data_Reset_UI.activeSelf)
         {
             if(OffsetX < 200)
             {
@@ -259,12 +271,13 @@ public class Player_StageSelectManager : MonoBehaviour
 
     private void Level1()
     {
-        if (Level1_Enable)
+        if (Level1_Enable && !enterlevel1)
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
+                enterlevel1 = true;
                 DontDestroyOnLoad(Leaderboard_manager);
-                SceneManager.LoadScene("Level1");
+                StartCoroutine(Enterlevel1());
             }
         }
     }
@@ -280,7 +293,30 @@ public class Player_StageSelectManager : MonoBehaviour
         }
     }
 
+    IEnumerator Enterlevel1()
+    {
+        player.enterlevel1 = true;
+        StartCoroutine(player_opacity());
+        for (float i = 3.0f; i >= 0.05f; i -= 0.005f)
+        {
+            CircleTransition.localScale = new Vector3(i, i, i);
+            yield return new WaitForSeconds(0.001f);
+        }
+        enterLevelBlack.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
+        SceneManager.LoadScene("Level1");
+    }
 
+    IEnumerator player_opacity()
+    {
+        Color color = player_sprite.color;
+        for (float i = 1.0f; i >= 0.0f; i -= 0.01f)
+        {
+            color.a = i;
+            player_sprite.color = color;
+            yield return new WaitForSeconds(0.001f);
+        }
+    }
     public void EscapeMenu_ReturnToTitle()
     {
         EscapeMenu.SetActive(false);
