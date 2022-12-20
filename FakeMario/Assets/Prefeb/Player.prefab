@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6447892942834051109}
   - component: {fileID: 3697911213884206399}
   m_Layer: 0
-  m_Name: GroudChk
+  m_Name: GroundChk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -366,7 +366,7 @@ GameObject:
   - component: {fileID: 9115775052617131748}
   - component: {fileID: 9115775052617131744}
   - component: {fileID: 9115775052617131745}
-  - component: {fileID: 6136205552220575146}
+  - component: {fileID: 5215748522873090141}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -503,7 +503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 635c8ec81c5216243b71b194cc04c58b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpKey: 0
+  jumpKey: 32
   moveSpeed: 2
   jumpPower: 15
   Wdis: 1
@@ -529,7 +529,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!82 &6136205552220575146
+--- !u!82 &5215748522873090141
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -540,7 +540,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e39030d60151acc46af43bec14726366, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

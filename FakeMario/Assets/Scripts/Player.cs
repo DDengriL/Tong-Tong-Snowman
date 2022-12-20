@@ -9,16 +9,21 @@ public class Player : MonoBehaviour
 
     Stage1_Goal st1_goal;
 
+    FakeGoal_Trap fakegoaltrap;
+
+    Score score;
+
     GroundChk gchk;
 
     [Header("Jump Key")]
     [SerializeField]
-    private KeyCode jumpKey;
+    private KeyCode jumpKey = KeyCode.Space;
 
     Rigidbody2D rb;
     SpriteRenderer sr;
     Animator ani;
     AudioSource audio;
+    GameObject Leaderboard_manager;
 
     Vector2 tmp;
 
@@ -28,28 +33,37 @@ public class Player : MonoBehaviour
 
     [SerializeField] float Wdis;
 
-    private int isright;
+    // ³Í ³ª°¡¶ó
     private bool canjump = false;
     private bool canHold = false;
 
     private float temp;
 
-    private float F = 0.01666f;
+    
     private float Y;
     private bool canDe;
 
     public bool isArrive = false;
     public bool isPause = false;
+    public bool enterlevel1 = false;
+    private bool isdead = false;
 
     Color color;
 
     void Start()
     {
+        
         gchk = GetComponentInChildren<GroundChk>();
         audio = GetComponent<AudioSource>();
-        if(SceneManager.GetActiveScene().name == "Level2")
+        if(SceneManager.GetActiveScene().name == "Level1")
         {
             st1_goal = GameObject.Find("Goal").GetComponent<Stage1_Goal>();
+            score = GameObject.Find("ScoreManager").GetComponent<Score>();
+            Leaderboard_manager = GameObject.Find("Leaderboard_Manager");
+        }
+        if(SceneManager.GetActiveScene().name == "Level1")
+        {
+            fakegoaltrap = GameObject.Find("Fake_Goal").GetComponent<FakeGoal_Trap>();
         }
         
         tmp = transform.position;
@@ -61,7 +75,12 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if(!isPause && !isArrive)
+        if(Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().name == "Level1" && !st1_goal.isGoal)
+        {
+            Destroy(Leaderboard_manager);
+            SceneManager.LoadScene("StageSelect");
+        }
+        if(!isPause && !isArrive && !enterlevel1 && !isdead)
         {
             if (canjump == false && rb.velocity.y < -1)
             {
@@ -166,7 +185,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(!isPause && !isArrive)
+        if(!isPause && !isArrive && !enterlevel1 && !isdead)
         {
             Dir = Input.GetAxis("Horizontal") * moveSpeed;
             rb.velocity = new Vector2(Dir, rb.velocity.y);
@@ -206,7 +225,14 @@ public class Player : MonoBehaviour
     
     public IEnumerator Respawn()
     {
-        yield return new WaitForSeconds(2.0f);
+        Color color = sr.color;
+        for (float i = 1.0f; i >= 0.0f; i -= 0.01f)
+        {
+            color.a = i;
+            sr.color = color;
+            yield return new WaitForSeconds(0.001f);
+        }
+        yield return new WaitForSeconds(1.0f);
         if(SceneManager.GetActiveScene().name == "Level1")
         {
             SceneManager.LoadScene("Level1");
@@ -231,14 +257,31 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.name == "Goal")
         {
-            StartCoroutine(st1_goal.Goal());
+            if(SceneManager.GetActiveScene().name == "Level1")
+            {
+                StartCoroutine(st1_goal.Goal());
+                st1_goal.isGoal = true;
+            }
+           
+            isArrive = true;
+        }
+        if(collision.gameObject.name == "Goal_Bonus")
+        {
+            score.score += 500;
+        }
+
+        if(collision.gameObject.name == "Fake_Goal")
+        {
+            StartCoroutine(fakegoaltrap.FakeGoal());
             isArrive = true;
         }
 
 
         if (collision.gameObject.tag == "deadzone")
         {
+            isdead = true;
             gameObject.layer = 8;
+            rb.velocity = new Vector2(0, 0);
             StartCoroutine(Respawn());
         }
     }

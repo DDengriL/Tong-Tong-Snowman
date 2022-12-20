@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEditor.Rendering;
 
 public class Player_StageSelectManager : MonoBehaviour
 {
@@ -16,7 +17,26 @@ public class Player_StageSelectManager : MonoBehaviour
     [Header("Leaderboard UI")]
     [SerializeField] private GameObject Leaderboard_UI;
 
+    [Header("Data Reset UI")]
+    [SerializeField] private GameObject Data_Reset_UI;
+
+    [Header("Player Info")]
+    SpriteRenderer player_sprite;
+    [SerializeField] private GameObject enterLevelBlack;
+   
+
+
     private float OffsetX = 0;
+
+    [Header("Stage Select Level Text")]
+    [SerializeField] private SpriteRenderer level1_text;
+    private bool istxtshow = false;
+
+
+    [Header("Data Reset System")]
+    [SerializeField] private Text DataResetText;
+    [SerializeField] private GameObject DataReset_Obj;
+    [SerializeField] private Image DataResetCompleteBlackScrn;
 
     [Header("Save System")]
     [SerializeField] private Text SaveText;
@@ -26,6 +46,7 @@ public class Player_StageSelectManager : MonoBehaviour
     private bool saving = false;
     private bool leaderboard_open = false;
     private bool saveComplete = false;
+    private bool enterlevel1 = false;
 
     [Header("Level 1 Door")]
     [SerializeField] private SpriteRenderer Level_1_Door;
@@ -40,10 +61,14 @@ public class Player_StageSelectManager : MonoBehaviour
 
     [Header("Level Unlock")]
     public bool Level2Unlock;
+    [SerializeField] private Animator level2_lock;
 
+    [Header("Intro Circle Transition")]
+    [SerializeField] private RectTransform CircleTransition;
 
     [Header("Player Script")]
     [SerializeField] private Player player;
+    [SerializeField] private Animator player_anim;
 
     [Header("StageSelect Intro")]
     [SerializeField] private StageSelect_Intro stageIntro;
@@ -55,6 +80,9 @@ public class Player_StageSelectManager : MonoBehaviour
     private void Awake()
     {
         ReturnToTitle_UI = GameObject.Find("ReturnToTitle");
+        player_sprite = GetComponent<SpriteRenderer>();
+        
+        
         Debug.Log(ReturnToTitle_UI.name);
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         
@@ -62,9 +90,12 @@ public class Player_StageSelectManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        enterLevelBlack.SetActive(false);
         EscapeMenu.SetActive(false);
         Leaderboard_UI.SetActive(false);
         ReturnToTitle_UI.SetActive(false);
+        Data_Reset_UI.SetActive(false);
+        DataReset_Obj.SetActive(false);
         SaveTextObj.SetActive(false);
         DataLoad();
         if(EscapeUIMat != null)
@@ -83,10 +114,18 @@ public class Player_StageSelectManager : MonoBehaviour
         StageSelecting();
         EscapeUIOffsetScrolling();
         EscapeMenuManager();
-
+        PlayerAnimation();
         
     }
-
+    private void PlayerAnimation()
+    {
+        if (EscapeMenu.activeSelf)
+        {
+            player_anim.SetBool("isjump", false);
+            player_anim.SetBool("islanding", false);
+            player_anim.SetBool("ismove", false);
+        }
+    }
     private void StageSelecting()
     {
         Level1();
@@ -123,7 +162,7 @@ public class Player_StageSelectManager : MonoBehaviour
 
     private void EscapeUIOffsetScrolling()
     {
-        if(EscapeMenu.activeSelf || ReturnToTitle_UI.activeSelf)
+        if(EscapeMenu.activeSelf || ReturnToTitle_UI.activeSelf || Data_Reset_UI.activeSelf)
         {
             if(OffsetX < 200)
             {
@@ -165,7 +204,39 @@ public class Player_StageSelectManager : MonoBehaviour
         
     }
 
-  
+     public void Escape_Menu_Data_Reset_Btn()
+    {
+        EscapeMenu.SetActive(false);
+        Data_Reset_UI.SetActive(true);
+    }
+
+    public void Data_Reset_Cancel_Btn()
+    {
+        Data_Reset_UI.SetActive(false);
+        player.isPause = false;
+    }
+    public void Data_Reset_Check_Btn()
+    {
+        StartCoroutine(Data_Reset());
+    }
+
+    IEnumerator Data_Reset()
+    {
+        Data_Reset_UI.SetActive(false);
+        DataReset_Obj.SetActive(true);
+        DataResetText.text = "데이터 초기화 중...";
+        for (int i = 0; i <= leaderboard_1.bestScore.Length; i++)
+        {
+            PlayerPrefs.DeleteKey("World 1 " + "Player " + i);
+            PlayerPrefs.DeleteKey("World 1 " + "Player " + i + " Best Score");
+        }
+        PlayerPrefs.DeleteKey("Level2Data");
+        PlayerPrefs.DeleteKey("rankPlayerCount");
+        yield return new WaitForSeconds(1.5f);
+        DataResetText.text = "데이터 초기화 완료!";
+        yield return new WaitForSeconds(1.5f);
+        StartCoroutine(SaveCompleteFade());
+    }
     IEnumerator SaveCompleteFade()
     {
         Color color = SaveCompleteblackScn.color;
@@ -200,12 +271,13 @@ public class Player_StageSelectManager : MonoBehaviour
 
     private void Level1()
     {
-        if (Level1_Enable)
+        if (Level1_Enable && !enterlevel1)
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
+                enterlevel1 = true;
                 DontDestroyOnLoad(Leaderboard_manager);
-                SceneManager.LoadScene("Level2");
+                StartCoroutine(Enterlevel1());
             }
         }
     }
@@ -221,7 +293,30 @@ public class Player_StageSelectManager : MonoBehaviour
         }
     }
 
+    IEnumerator Enterlevel1()
+    {
+        player.enterlevel1 = true;
+        StartCoroutine(player_opacity());
+        for (float i = 3.0f; i >= 0.05f; i -= 0.01f)
+        {
+            CircleTransition.localScale = new Vector3(i, i, i);
+            yield return new WaitForSeconds(0.001f);
+        }
+        enterLevelBlack.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
+        SceneManager.LoadScene("Level1");
+    }
 
+    IEnumerator player_opacity()
+    {
+        Color color = player_sprite.color;
+        for (float i = 1.0f; i >= 0.0f; i -= 0.01f)
+        {
+            color.a = i;
+            player_sprite.color = color;
+            yield return new WaitForSeconds(0.001f);
+        }
+    }
     public void EscapeMenu_ReturnToTitle()
     {
         EscapeMenu.SetActive(false);
@@ -269,8 +364,8 @@ public class Player_StageSelectManager : MonoBehaviour
         if(collision.gameObject.tag == "Level1")
         {
             Level1_Enable = true;
-            Level_1_Door.color = Color.green;
-            Debug.LogError("player reached level 1 door");
+            Level_1_Door.color = new Color32(255, 255, 255, 255);
+            
         }
 
         if(Level2Unlock)
@@ -282,15 +377,44 @@ public class Player_StageSelectManager : MonoBehaviour
                 Debug.LogError("player reached level 2 door");
             }
         }
+        else
+        {
+            if(collision.gameObject.tag == "Level2" || collision.gameObject.name == "level2lock")
+            {
+                if (Input.GetKeyDown(KeyCode.UpArrow))
+                    StartCoroutine(level2lock_touch());
+            }
+        }
+    }
+
+    IEnumerator level2lock_touch()
+    {
+        
+            level2_lock.SetBool("istouch", true);
+            yield return new WaitForSeconds(1.5f);
+            level2_lock.SetBool("istouch", false);
+        
+            
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Level1")
+        {
+            istxtshow = true;
+            StopCoroutine(level1Text_hide());
+            StartCoroutine(level1Text_show());
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Level1")
         {
+            istxtshow = false;
             Level1_Enable = false;
-            Level_1_Door.color = Color.white;
-            Debug.LogError("player exited level 1 door");
+            Level_1_Door.color = new Color32(100, 100, 100, 255);
+            StopCoroutine(level1Text_show());
+            StartCoroutine(level1Text_hide());
         }
 
         if(Level2Unlock)
@@ -301,6 +425,38 @@ public class Player_StageSelectManager : MonoBehaviour
                 Level_2_Door.color = Color.white;
                 Debug.LogError("player exited level 2 door");
             }
+        }
+        
+        
+    }
+
+    IEnumerator level1Text_show()
+    {
+        Color color = level1_text.color;
+        for(float i = color.a; i <= 1.0f; i += 0.01f)
+        {
+            if(istxtshow)
+            {
+                color.a = i;
+                level1_text.color = color;
+                yield return new WaitForSeconds(0.001f);
+            }
+            
+        }
+    }
+
+    IEnumerator level1Text_hide()
+    {
+        Color color = level1_text.color;
+        for(float i = color.a; i >= 0.0f; i -= 0.01f)
+        {
+            if(!istxtshow)
+            {
+                color.a = i;
+                level1_text.color = color;
+                yield return new WaitForSeconds(0.001f);
+            }
+            
         }
     }
 }
