@@ -40,5 +40,6 @@ public class WallChk : MonoBehaviour
         {
             iswall = false;
         }
+
     }
 }

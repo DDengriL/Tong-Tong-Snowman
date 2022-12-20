@@ -68,14 +68,6 @@ public class Coin : MonoBehaviour
                     move = false;
                 }
             }
-
         }
-        
-
-
-        
-
-
     }
-
 }
