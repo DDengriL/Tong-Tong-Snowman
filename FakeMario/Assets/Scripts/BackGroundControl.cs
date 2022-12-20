@@ -19,7 +19,7 @@ public class BackGroundControl : MonoBehaviour
 
     void Update()
     {
-        if(!player.isPause )
+        if(!player.isPause && !player.isdead)
         {
             Dir = Input.GetAxis("Horizontal");
             transform.position += new Vector3(Dir, 0, 0) * moveSpeed * Time.deltaTime;

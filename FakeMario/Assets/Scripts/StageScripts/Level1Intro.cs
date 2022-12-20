@@ -14,7 +14,7 @@ public class Level1Intro : MonoBehaviour
 
     IEnumerator circle()
     {
-        for(float i = 0.095f; i <= 4.5f; i += 0.01f)
+        for(float i = 0.095f; i <= 4.5f; i += 0.01f * Time.deltaTime * 300)
         {
             levelentercircle.localScale = new Vector3(i, i, i);
             yield return new WaitForSeconds(0.001f);

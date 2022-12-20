@@ -240,7 +240,7 @@ public class Player_StageSelectManager : MonoBehaviour
     IEnumerator SaveCompleteFade()
     {
         Color color = SaveCompleteblackScn.color;
-        for(float i = 0.0f; i <= 1.0f; i+= 0.004f)
+        for(float i = 0.0f; i <= 1.0f; i+= 0.004f * Time.deltaTime * 300)
         {
             color.a = i;
             SaveCompleteblackScn.color = color;
@@ -254,13 +254,13 @@ public class Player_StageSelectManager : MonoBehaviour
         while(!saveComplete)
         {
             Color color = SaveText.color;
-            for (float i = 1.0f; i >= 0.8f; i -= 0.001f)
+            for (float i = 1.0f; i >= 0.8f; i -= 0.001f * Time.deltaTime * 300)
             {
                 color.a = i;
                 SaveText.color = color;
                 yield return new WaitForSeconds(0.001f);
             }
-            for (float i = 0.8f; i <= 1.0f; i += 0.001f)
+            for (float i = 0.8f; i <= 1.0f; i += 0.001f * Time.deltaTime * 300)
             {
                 color.a = i;
                 SaveText.color = color;
@@ -297,7 +297,7 @@ public class Player_StageSelectManager : MonoBehaviour
     {
         player.enterlevel1 = true;
         StartCoroutine(player_opacity());
-        for (float i = 3.0f; i >= 0.05f; i -= 0.01f)
+        for (float i = 3.0f; i >= 0.05f; i -= 0.01f * Time.deltaTime * 300)
         {
             CircleTransition.localScale = new Vector3(i, i, i);
             yield return new WaitForSeconds(0.001f);
@@ -310,7 +310,7 @@ public class Player_StageSelectManager : MonoBehaviour
     IEnumerator player_opacity()
     {
         Color color = player_sprite.color;
-        for (float i = 1.0f; i >= 0.0f; i -= 0.01f)
+        for (float i = 1.0f; i >= 0.0f; i -= 0.01f * Time.deltaTime * 300)
         {
             color.a = i;
             player_sprite.color = color;
@@ -433,7 +433,7 @@ public class Player_StageSelectManager : MonoBehaviour
     IEnumerator level1Text_show()
     {
         Color color = level1_text.color;
-        for(float i = color.a; i <= 1.0f; i += 0.01f)
+        for(float i = color.a; i <= 1.0f; i += 0.01f * Time.deltaTime  *300)
         {
             if(istxtshow)
             {
@@ -448,7 +448,7 @@ public class Player_StageSelectManager : MonoBehaviour
     IEnumerator level1Text_hide()
     {
         Color color = level1_text.color;
-        for(float i = color.a; i >= 0.0f; i -= 0.01f)
+        for(float i = color.a; i >= 0.0f; i -= 0.01f * Time.deltaTime * 300)
         {
             if(!istxtshow)
             {

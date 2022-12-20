@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
     public bool isArrive = false;
     public bool isPause = false;
     public bool enterlevel1 = false;
-    private bool isdead = false;
+    public bool isdead = false;
 
     Color color;
 

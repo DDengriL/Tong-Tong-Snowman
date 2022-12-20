@@ -37,7 +37,7 @@ public class StageSelect_Intro : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         blackScreen.SetActive(false);
         StartCoroutine(CircleTransition_Opacity());
-        for (float i = 0.05f; i <= 3.0f; i += 0.01f)
+        for (float i = 0.05f; i <= 3.0f; i += 0.01f * Time.deltaTime * 300)
         {
             CircleTransition.localScale = new Vector3(i, i, i);
             yield return new WaitForSeconds(0.001f);
@@ -48,7 +48,7 @@ public class StageSelect_Intro : MonoBehaviour
     IEnumerator CircleTransition_Opacity()
     {
         Color color = MainCircle.color;
-        for(float i = 1.0f; i >= 0.0f; i-= 0.0002f)
+        for(float i = 1.0f; i >= 0.0f; i-= 0.0002f * Time.deltaTime * 300)
         {
             color.a = i;
             MainCircle.color = color;

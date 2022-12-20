@@ -75,7 +75,7 @@ public class Intro : MonoBehaviour
     IEnumerator StartingGame()
     {
         Color color = startGame_Blackscreen.color;
-        for(float i = 0.0f; i <= 1.0f; i += 0.01f)
+        for(float i = 0.0f; i <= 1.0f; i += 0.01f * Time.deltaTime * 300)
         {
             color.a = i;
             startGame_Blackscreen.color = color;
@@ -89,7 +89,7 @@ public class Intro : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         IntroBlackScreen.SetActive(false);
         StartCoroutine(IntroOpacity());
-        for(float i = 0.01f; i <= 2.5f; i += 0.01f)
+        for(float i = 0.01f; i <= 2.5f; i += 0.01f * Time.deltaTime * 300)
         {
             Circle_Transition.localScale = new Vector3(i, i, i);
             yield return new WaitForSeconds(0.001f);
@@ -105,14 +105,14 @@ public class Intro : MonoBehaviour
         {
             AFKState = true;
         }
-        
+        // Im Smart
         while(GameTitle.transform.position.y <= 6.4f)
         {
             GameTitle.transform.Translate(0, 1, 0);
         }
         yield return new WaitForSeconds(1.0f);
         StartCoroutine(OutroOpacity());
-        for (float i = 2.5f; i >= 0.01f; i -= 0.01f)
+        for (float i = 2.5f; i >= 0.01f; i -= 0.01f * Time.deltaTime * 300)
         {
             Circle_Transition.localScale = new Vector3(i, i, i);
             yield return new WaitForSeconds(0.001f);
@@ -128,7 +128,7 @@ public class Intro : MonoBehaviour
         Color color = img1.color;
 
         yield return new WaitForSeconds(0.2f);
-        for (float i = 0.0f; i <= 1.0f; i +=1.0f)
+        for (float i = 0.0f; i <= 1.0f; i +=1.0f * Time.deltaTime * 300)
         {
             color.a = i;
 
@@ -159,7 +159,7 @@ public class Intro : MonoBehaviour
         Color color = img1.color;
 
         yield return new WaitForSeconds(0.2f);
-        for(float i = 1.0f; i >= 0.0f; i -= 0.001f)
+        for(float i = 1.0f; i >= 0.0f; i -= 0.001f * Time.deltaTime * 300)
         {
             color.a = i;
             
@@ -187,14 +187,14 @@ public class Intro : MonoBehaviour
 
     IEnumerator AnyKeyText_Scale()
     {
-        for(float i = 0.0f; i <= 1.0f; i += 0.01f)
+        for(float i = 0.0f; i <= 1.0f; i += 0.01f * Time.deltaTime * 300)
         {
             AnyKey_Text.localScale = new Vector3(i, i, i);
             yield return new WaitForSeconds(0.001f);
         }
         while(AFKState == false)
         {
-            for(float i = 1.0f; i >= 0.95f; i -= 0.0001f)
+            for(float i = 1.0f; i >= 0.95f; i -= 0.0001f * Time.deltaTime * 300)
             {
                 if(AFKState)
                 {
@@ -203,7 +203,7 @@ public class Intro : MonoBehaviour
                 AnyKey_Text.localScale = new Vector3(i, i, i);
                 yield return new WaitForSeconds(0.001f);
             }
-            for (float i = 0.95f; i <= 1.0f; i += 0.0001f) 
+            for (float i = 0.95f; i <= 1.0f; i += 0.0001f * Time.deltaTime * 300) 
             {
                 if (AFKState)
                 {
@@ -213,7 +213,7 @@ public class Intro : MonoBehaviour
                 yield return new WaitForSeconds(0.001f);
             }
         }
-        for(float i = 1.0f; i >= 0.0f; i -= 0.01f)
+        for(float i = 1.0f; i >= 0.0f; i -= 0.01f * Time.deltaTime * 300)
         {
             AnyKey_Text.localScale = new Vector3(i, i, i);
             yield return new WaitForSeconds(0.001f);
