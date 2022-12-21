@@ -7,6 +7,7 @@ using UnityEngine.Rendering;
 public class WallChk : MonoBehaviour
 {
     [SerializeField] Rigidbody2D playerrb;
+    [SerializeField] Player player;
 
     GroundChk gchk;
 
@@ -21,7 +22,7 @@ public class WallChk : MonoBehaviour
 
     void Update()
     {
-        if (iswall && !gchk.isGround)
+        if (iswall && !gchk.isGround && !player.isdead)
         {
             playerrb.velocity = new Vector2(playerrb.velocity.x, -7);
         }

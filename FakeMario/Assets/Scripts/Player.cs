@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     Stage1_Goal st1_goal;
 
     FakeGoal_Trap fakegoaltrap;
+    Level2_Trap_Pipe2 lvl2_pipe_trap;
 
     Score score;
 
@@ -65,7 +66,10 @@ public class Player : MonoBehaviour
         {
             fakegoaltrap = GameObject.Find("Fake_Goal").GetComponent<FakeGoal_Trap>();
         }
-        
+        if(SceneManager.GetActiveScene().name == "Level2")
+        {
+            lvl2_pipe_trap = GameObject.Find("Trap_Pipe").GetComponent<Level2_Trap_Pipe2>();
+        }
         tmp = transform.position;
         ani = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
@@ -257,24 +261,35 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.name == "Goal")
         {
-            if(SceneManager.GetActiveScene().name == "Level1")
+            if (SceneManager.GetActiveScene().name == "Level1")
             {
                 StartCoroutine(st1_goal.Goal());
                 st1_goal.isGoal = true;
             }
-           
+
             isArrive = true;
         }
-        if(collision.gameObject.name == "Goal_Bonus")
+        if (collision.gameObject.name == "Goal_Bonus")
         {
             score.score += 500;
         }
 
-        if(collision.gameObject.name == "Fake_Goal")
+        if (collision.gameObject.name == "Fake_Goal")
         {
             StartCoroutine(fakegoaltrap.FakeGoal());
             isArrive = true;
         }
+        if (collision.gameObject.name == "level_2_pipe_trap_collision")
+        {
+            bool trap = false;
+            if (Input.GetAxisRaw("Horizontal") == 1 && !trap)
+            {
+                trap = true;
+                isArrive = true;
+                StartCoroutine(lvl2_pipe_trap.Trap_Active());
+            }
+        }
+
 
 
         if (collision.gameObject.tag == "deadzone")
@@ -287,6 +302,18 @@ public class Player : MonoBehaviour
     }
 
 
-
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        /*if (collision.gameObject.name == "level_2_pipe_trap_collision")
+        {
+            bool trap = false;
+            if(Input.GetAxisRaw("Horizontal") == 1 && !trap)
+            {
+                trap = true;
+                isArrive = true;
+                StartCoroutine(lvl2_pipe_trap.Trap_Active());
+            }
+        }*/
+    }
 
 }
