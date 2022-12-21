@@ -14,8 +14,13 @@ public class Player_StageSelectManager : MonoBehaviour
     [Header("Return To Title UI")]
     [SerializeField] private GameObject ReturnToTitle_UI;
 
+    [Header("Leaderboard Choice UI")]
+    [SerializeField] private GameObject Leaderboard_Choice_UI;
+
     [Header("Leaderboard UI")]
-    [SerializeField] private GameObject Leaderboard_UI;
+    [SerializeField] private GameObject Leaderboard_Stage1;
+    [SerializeField] private GameObject Leaderboard_Stage2;
+
 
     [Header("Data Reset UI")]
     [SerializeField] private GameObject Data_Reset_UI;
@@ -92,8 +97,10 @@ public class Player_StageSelectManager : MonoBehaviour
     {
         enterLevelBlack.SetActive(false);
         EscapeMenu.SetActive(false);
-        Leaderboard_UI.SetActive(false);
-        ReturnToTitle_UI.SetActive(false);
+        Leaderboard_Choice_UI.SetActive(false);
+        Leaderboard_Stage1.SetActive(false);
+        Leaderboard_Stage2.SetActive(false);
+        ReturnToTitle_UI.SetActive(false); 
         Data_Reset_UI.SetActive(false);
         DataReset_Obj.SetActive(false);
         SaveTextObj.SetActive(false);
@@ -269,6 +276,21 @@ public class Player_StageSelectManager : MonoBehaviour
         }
     }
 
+    public void Leaderboard_stage1_visible()
+    {
+        Leaderboard_Choice_UI.SetActive(false);
+        Leaderboard_Stage1.SetActive(true);
+        leaderboard_open = true;
+    }
+
+    public void Leaderboard_stage2_visible()
+    {
+        Leaderboard_Choice_UI.SetActive(false);
+        Leaderboard_Stage2.SetActive(true);
+        leaderboard_open = true;
+    }
+
+
     private void Level1()
     {
         if (Level1_Enable && !enterlevel1)
@@ -327,13 +349,20 @@ public class Player_StageSelectManager : MonoBehaviour
     public void EscapeMenu_Leaderboard()
     {
         EscapeMenu.SetActive(false);
-        leaderboard_open = true;
-        Leaderboard_UI.SetActive(true);
+        
+        Leaderboard_Choice_UI.SetActive(true);
     }
 
-    public void Leaderboard_Close()
+    public void Leaderboard_Stage_1_Close()
     {
-        Leaderboard_UI.SetActive(false);
+        Leaderboard_Stage1.SetActive(false);
+        leaderboard_open = false;
+        player.isPause = false;
+    }
+
+    public void Leaderboard_Stage_2_Close()
+    {
+        Leaderboard_Stage2.SetActive(false);
         leaderboard_open = false;
         player.isPause = false;
     }
