@@ -17,7 +17,16 @@ public class Camera : MonoBehaviour
 
     void Update()
     {
-        
+        if (target.position.y > 7.5)
+        {
+            yPos = 11.27f;
+        }
+        else
+        {
+            yPos = 0.27f;
+        }
+
+
         Vector3 finalTarget = new Vector3(target.position.x, yPos, -10);
 
         if(!player.isdead)

@@ -245,6 +245,10 @@ public class Player : MonoBehaviour
         {
             SceneManager.LoadScene("Level2");
         }
+        if (SceneManager.GetActiveScene().name == "Level3")
+        {
+            SceneManager.LoadScene("Level3");
+        }
     }
 
 
