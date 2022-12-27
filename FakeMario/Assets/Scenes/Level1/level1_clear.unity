@@ -1244,7 +1244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   progress_bar: {fileID: 585979152}
   currentScore: 0
-  testScore: 3600
+  testScore: 5800
 --- !u!4 &2104569505
 Transform:
   m_ObjectHideFlags: 0
