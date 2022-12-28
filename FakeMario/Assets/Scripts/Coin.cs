@@ -18,8 +18,8 @@ public class Coin : MonoBehaviour
 
     private void Start()
     {
-        score = GameObject.Find("ScoreManager").GetComponent<Score>();
-        coin_text = GameObject.Find("GameSystemManager").GetComponent<Coin_Text>();
+        //score = GameObject.Find("ScoreManager").GetComponent<Score>();
+        //coin_text = GameObject.Find("GameSystemManager").GetComponent<Coin_Text>();
         sr = GetComponent<SpriteRenderer>();
         coinins = Instantiate(coin);
         coinins.transform.parent = this.transform;
@@ -33,10 +33,11 @@ public class Coin : MonoBehaviour
     {
         if (istouch && cantouch)
         {
+            Debug.Log("cc");
             if (coin.gameObject.name == "Coin")
             {
-                score.score += 100;
-                coin_text.coin_amount++;
+                //score.score += 100;
+                //coin_text.coin_amount++;
 
             }
             coincolor.a = 1;

@@ -6,7 +6,7 @@ public class SnowBallFire : MonoBehaviour
 {
     public bool canFire;
     public bool stop;
-    [SerializeField] float coolT;
+    public float coolT;
     [SerializeField] float offSetx;
     [SerializeField] float offSety;
 
@@ -22,6 +22,7 @@ public class SnowBallFire : MonoBehaviour
         if (canFire)
         {
             canFire = false;
+            //StopCoroutine(SnowballFire());
             StartCoroutine(SnowballFire());
         }
 
@@ -42,6 +43,20 @@ public class SnowBallFire : MonoBehaviour
             snowball.transform.position = transform.position + new Vector3(offSetx, offSety, 0);
             yield return new WaitForSeconds(coolT);
             Fire = true;
+        }
+    }
+
+    public IEnumerator SnowballFire2()
+    {
+        bool Fire = true;
+        while (Fire)
+        {
+            Fire = false;
+            GameObject sbinst = Instantiate(snowball);
+            snowball.transform.position = transform.position + new Vector3(offSetx, offSety, 0);
+            yield return new WaitForSeconds(coolT);
+            Fire = true;
+            stop = true;
         }
     }
 

@@ -8,6 +8,9 @@ public class Block_Ani : MonoBehaviour
     private bool playerTouch;
     private bool canTouch = true;
     Coin coin;
+
+    public bool Fire;
+
     private void Start()
     {
         coin = GetComponent<Coin>();
@@ -109,6 +112,8 @@ public class Block_Ani : MonoBehaviour
         {
             if (collision.gameObject.transform.position.y < transform.position.y - 0.3f)
             {
+                Debug.Log("bb");
+                Fire = true;
                 coin.istouch = true;   
                 playerTouch = true;
             }
