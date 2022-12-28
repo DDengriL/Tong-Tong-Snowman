@@ -20,7 +20,6 @@ public class SnowBall : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
-            Debug.Log("Aa");
             Destroy(this.gameObject);
         }
     }

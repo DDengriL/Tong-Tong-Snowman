@@ -6,6 +6,9 @@ public class SnowBallFire : MonoBehaviour
 {
     public bool canFire;
     public bool stop;
+    [SerializeField] float coolT;
+    [SerializeField] float offSetx;
+    [SerializeField] float offSety;
 
     [SerializeField] GameObject snowball;
 
@@ -36,8 +39,8 @@ public class SnowBallFire : MonoBehaviour
             }
             Fire = false;
             GameObject sbinst = Instantiate(snowball);
-            snowball.transform.position = transform.position;
-            yield return new WaitForSeconds(3.5f);
+            snowball.transform.position = transform.position + new Vector3(offSetx, offSety, 0);
+            yield return new WaitForSeconds(coolT);
             Fire = true;
         }
     }
