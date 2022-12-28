@@ -21,10 +21,14 @@ public class Camera : MonoBehaviour
         {
             yPos = 11.27f;
         }
-        else
+        else if(target.position.y <=7.5f && target.position.y > -4.5f)
         {
             yPos = 0.27f;
         }
+        /*else
+        {
+            yPos = -4f;
+        }*/
 
 
         Vector3 finalTarget = new Vector3(target.position.x, yPos, -10);
