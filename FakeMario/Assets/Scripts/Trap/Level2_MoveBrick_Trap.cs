@@ -54,8 +54,8 @@ public class Level2_MoveBrick_Trap : MonoBehaviour
     {
         while(transform.position.x >= 90.56063f)
         {
-            transform.Translate(-0.1f, 0, 0);
-            yield return new WaitForSeconds(0.00000001f);
+            transform.Translate(-35f * Time.deltaTime, 0, 0);
+            yield return new WaitForSeconds(0.001f);
         }
     }
 }

@@ -343,3 +343,14 @@ public class Player : MonoBehaviour
     }
 
 }
+
+
+
+
+
+
+// I like P
+// if you find this p
+// you will be p
+
+// im smart
