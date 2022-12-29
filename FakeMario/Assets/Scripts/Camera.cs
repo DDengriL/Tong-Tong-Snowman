@@ -31,7 +31,7 @@ public class Camera : MonoBehaviour
         }*/
 
 
-        Vector3 finalTarget = new Vector3(target.position.x, yPos, -10);
+        Vector3 finalTarget = new Vector3(target.position.x, yPos, -50);
 
         if(!player.isdead)
         transform.position = Vector3.SmoothDamp(transform.position,  finalTarget, ref velocity, smoothing);
