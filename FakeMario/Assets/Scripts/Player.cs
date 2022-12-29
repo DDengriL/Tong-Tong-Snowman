@@ -221,13 +221,17 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        canHold = false;
+        
         rb.velocity = new Vector2(rb.velocity.x, 0);
 
         if (collision.gameObject.tag == "Ground")
         {
             ani.SetBool("islanding", false);
             canjump = true;
+        }
+        if (collision.gameObject.name != "movePlatform")
+        {
+            canHold = false;
         }
     }
 
