@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
 
     FakeGoal_Trap fakegoaltrap;
     Level2_Trap_Pipe2 lvl2_pipe_trap;
+    Level2_MoveBrick_Trap lvl2_move_Brick;
+    Level2_Move_Brick_BackTrap lvl2_move_back_trap;
+    Level2_Teleport_PIpe_Collision lvl2_tp_pipe;
 
     Score score;
 
@@ -48,6 +51,7 @@ public class Player : MonoBehaviour
     public bool isPause = false;
     public bool enterlevel1 = false;
     public bool isdead = false;
+    public bool ispipein = false;
 
     Color color;
 
@@ -69,6 +73,9 @@ public class Player : MonoBehaviour
         if(SceneManager.GetActiveScene().name == "Level2")
         {
             lvl2_pipe_trap = GameObject.Find("Trap_Pipe").GetComponent<Level2_Trap_Pipe2>();
+            lvl2_move_Brick = GameObject.Find("move_brick").GetComponent<Level2_MoveBrick_Trap>();
+            lvl2_move_back_trap = GameObject.Find("move_Brick_back_trap").GetComponent<Level2_Move_Brick_BackTrap>();
+            lvl2_tp_pipe = GameObject.Find("Teleport_Pipe_Collision").GetComponent<Level2_Teleport_PIpe_Collision>();
         }
         tmp = transform.position;
         ani = GetComponent<Animator>();
@@ -84,7 +91,7 @@ public class Player : MonoBehaviour
             Destroy(Leaderboard_manager);
             SceneManager.LoadScene("StageSelect");
         }
-        if(!isPause && !isArrive && !enterlevel1 && !isdead)
+        if(!isPause && !isArrive && !enterlevel1 && !isdead && !ispipein)
         {
             if (canjump == false && rb.velocity.y < -1)
             {
@@ -189,7 +196,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(!isPause && !isArrive && !enterlevel1 && !isdead)
+        if(!isPause && !isArrive && !enterlevel1 && !isdead && !ispipein)
         {
             Dir = Input.GetAxis("Horizontal") * moveSpeed;
             rb.velocity = new Vector2(Dir, rb.velocity.y);
@@ -303,21 +310,36 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector2(0, 0);
             StartCoroutine(Respawn());
         }
+
+        if(SceneManager.GetActiveScene().name == "Level2")
+        {
+            if(collision.gameObject.name == "move_btick_Back_trap_collision")
+            {
+                lvl2_move_back_trap.isblock = true;
+            }
+            if(collision.gameObject.name == "trap_active_collision")
+            {
+                lvl2_move_Brick.isActive = true;
+            }
+            if(collision.gameObject.name == "trap_active_collision_2")
+            {
+                lvl2_move_back_trap.iscollision = true;
+            }
+            
+        }
     }
 
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        /*if (collision.gameObject.name == "level_2_pipe_trap_collision")
+        if (collision.gameObject.name == "Teleport_Pipe_Collision")
         {
-            bool trap = false;
-            if(Input.GetAxisRaw("Horizontal") == 1 && !trap)
+            if(Input.GetAxisRaw("Vertical") == -1)
             {
-                trap = true;
-                isArrive = true;
-                StartCoroutine(lvl2_pipe_trap.Trap_Active());
+                lvl2_tp_pipe.isActive = true;
+                StartCoroutine(lvl2_tp_pipe.Pipe_Teleport());
             }
-        }*/
+        }
     }
 
 }
