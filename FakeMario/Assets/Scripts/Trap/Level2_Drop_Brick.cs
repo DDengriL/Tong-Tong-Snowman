@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Level2_Drop_Brick : MonoBehaviour
 {
+    bool isactive = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,17 +15,17 @@ public class Level2_Drop_Brick : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(isactive)
+        {
+            transform.Translate(0, -3f * Time.deltaTime, 0);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Player")
         {
-            for(; ; )
-            {
-                transform.Translate(0, -10, 0);
-            }
+            isactive = true;
         }
     }
 }
