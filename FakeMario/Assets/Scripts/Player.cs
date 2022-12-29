@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
 
     FakeGoal_Trap fakegoaltrap;
     Level2_Trap_Pipe2 lvl2_pipe_trap;
+    Level2_MoveBrick_Trap lvl2_move_Brick;
+    Level2_Move_Brick_BackTrap lvl2_move_back_trap;
 
     Score score;
 
@@ -69,6 +71,8 @@ public class Player : MonoBehaviour
         if(SceneManager.GetActiveScene().name == "Level2")
         {
             lvl2_pipe_trap = GameObject.Find("Trap_Pipe").GetComponent<Level2_Trap_Pipe2>();
+            lvl2_move_Brick = GameObject.Find("move_brick").GetComponent<Level2_MoveBrick_Trap>();
+            lvl2_move_back_trap = GameObject.Find("move_Brick_back_trap").GetComponent<Level2_Move_Brick_BackTrap>();
         }
         tmp = transform.position;
         ani = GetComponent<Animator>();
@@ -302,6 +306,22 @@ public class Player : MonoBehaviour
             gameObject.layer = 8;
             rb.velocity = new Vector2(0, 0);
             StartCoroutine(Respawn());
+        }
+
+        if(SceneManager.GetActiveScene().name == "Level2")
+        {
+            if(collision.gameObject.name == "move_btick_Back_trap_collision")
+            {
+                lvl2_move_back_trap.isblock = true;
+            }
+            if(collision.gameObject.name == "trap_active_collision")
+            {
+                lvl2_move_Brick.isActive = true;
+            }
+            if(collision.gameObject.name == "trap_active_collision_2")
+            {
+                lvl2_move_back_trap.iscollision = true;
+            }
         }
     }
 
