@@ -33,6 +33,8 @@ public class Timer : MonoBehaviour
             TimerStart1();
         if (SceneManager.GetActiveScene().name == "Level2")
             TimerStart2();
+        if (SceneManager.GetActiveScene().name == "Level3")
+            TimerStart3();
         timer_text.text = string.Format("{0:D2} : {1:D2}", min, (int)sec);
     }
 
@@ -73,4 +75,19 @@ public class Timer : MonoBehaviour
                 }
             //}
         }
+    private void TimerStart3()
+    {
+        //if (!st1_goal.isGoal)
+        //{
+        if (sec <= 0)
+        {
+            min--;
+            sec = 60;
+        }
+        else
+        {
+            sec -= Time.deltaTime;
+        }
+        //}
     }
+}

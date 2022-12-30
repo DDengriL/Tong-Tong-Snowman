@@ -112,7 +112,6 @@ public class Block_Ani : MonoBehaviour
         {
             if (collision.gameObject.transform.position.y < transform.position.y - 0.3f)
             {
-                Debug.Log("bb");
                 Fire = true;
                 coin.istouch = true;   
                 playerTouch = true;

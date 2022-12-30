@@ -8,8 +8,8 @@ public class InvisibleTile : MonoBehaviour
     Color color;
     Tilemap tm;
 
-    private bool isPlayer;
     private bool exitPlayer;
+    private bool isPlayer;
     
     void Start()
     {

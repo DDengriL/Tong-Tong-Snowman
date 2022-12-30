@@ -25,7 +25,6 @@ public class MadScroll : MonoBehaviour
         {
             if (canpluse)
             {
-                Debug.Log("aa");
                 ps.movespeed = -10;
                 canpluse = false;
             }
