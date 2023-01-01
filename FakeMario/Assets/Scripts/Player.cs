@@ -95,11 +95,12 @@ public class Player : MonoBehaviour
         {
             if (canjump == false && rb.velocity.y < -1)
             {
+                Debug.Log("land");
                 ani.SetBool("islanding", true);
                 ani.SetBool("isjump", false);
             }
 
-            if (Input.GetKeyDown(jumpKey) && canjump == true)
+            if (Input.GetKeyDown(jumpKey) && canjump == true && gchk.isGround)
             {
                 ani.SetBool("isjump", true);
                 rb.velocity = new Vector2(rb.velocity.x, 0);
@@ -152,7 +153,7 @@ public class Player : MonoBehaviour
                 ani.SetBool("ismove", true);
                 if (rb.velocity.x > 0)
                 {
-                sr.flipX = false;
+                    sr.flipX = false;
                 }
             }
             if (rb.velocity.x < 0.5)
@@ -164,7 +165,7 @@ public class Player : MonoBehaviour
                 ani.SetBool("ismove", true);
                 if (rb.velocity.x < 0)
                 {
-                sr.flipX = true;
+                    sr.flipX = true;
                 }
             }
             if (rb.velocity.x < 0.5 && rb.velocity.x > -0.5)
@@ -176,7 +177,16 @@ public class Player : MonoBehaviour
 
             
         }
-        
+
+        if (gchk.isGround)
+        {
+            ani.SetBool("islanding", false);
+        }
+        if (!gchk.isGround)
+        {
+            canjump = false;
+        }
+
     }
 
     void Hold() => canHold = true;
@@ -216,7 +226,12 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == "Ground")
         {
             canjump = true;
-        }   
+        }
+
+        if (gchk.isGround)
+        {
+            ani.SetBool("islanding", false);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -224,7 +239,12 @@ public class Player : MonoBehaviour
         
         rb.velocity = new Vector2(rb.velocity.x, 0);
 
-        if (collision.gameObject.tag == "Ground")
+        if (gchk.isGround)
+        {
+            ani.SetBool("islanding", false);
+        }
+
+        if (collision.gameObject.tag == "Ground" && gchk.isGround)
         {
             ani.SetBool("islanding", false);
             canjump = true;
@@ -263,14 +283,14 @@ public class Player : MonoBehaviour
     }
 
 
-    private void OnCollisionExit2D(Collision2D collision) 
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
+    //private void OnCollisionExit2D(Collision2D collision) 
+    //{
+    //    if (collision.gameObject.tag == "Ground")
+    //    {
             
-            canjump = false;
-        }
-    }
+    //        canjump = false;
+    //    }
+    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

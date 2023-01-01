@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6447892942834051109}
   - component: {fileID: 3697911213884206399}
+  - component: {fileID: 3979403013635931617}
   m_Layer: 0
   m_Name: GroundChk
   m_TagString: Untagged
@@ -58,6 +59,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.4100108, y: 0.07529169}
   m_EdgeRadius: 0
+--- !u!114 &3979403013635931617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1585490895435394987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc31862fbd20b0b40ab3a0852e9c289f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGround: 0
 --- !u!1 &9115775051219208628
 GameObject:
   m_ObjectHideFlags: 0
@@ -77,7 +91,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9115775051219208629
 Transform:
   m_ObjectHideFlags: 0
@@ -205,6 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerrb: {fileID: 9115775052617131748}
+  player: {fileID: 0}
 --- !u!1 &9115775052165982299
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,7 +239,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9115775052165982296
 Transform:
   m_ObjectHideFlags: 0
@@ -352,6 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerrb: {fileID: 9115775052617131748}
+  player: {fileID: 0}
 --- !u!1 &9115775052617131751
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,7 +502,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 9.8
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 25889dd2d3be46146aab0af13bb0c099, type: 2}
   m_Interpolate: 2
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -509,9 +525,12 @@ MonoBehaviour:
   Wdis: 1
   isArrive: 0
   isPause: 0
+  enterlevel1: 0
+  isdead: 0
+  ispipein: 0
 --- !u!95 &9115775052617131745
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -528,7 +547,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!82 &5215748522873090141
 AudioSource:
   m_ObjectHideFlags: 0
