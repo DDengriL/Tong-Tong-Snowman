@@ -20,6 +20,7 @@ public class Player_StageSelectManager : MonoBehaviour
     [Header("Leaderboard UI")]
     [SerializeField] private GameObject Leaderboard_Stage1;
     [SerializeField] private GameObject Leaderboard_Stage2;
+    [SerializeField] private GameObject Leaderboard_Stage3;
 
 
     [Header("Data Reset UI")]
@@ -52,6 +53,8 @@ public class Player_StageSelectManager : MonoBehaviour
     private bool leaderboard_open = false;
     private bool saveComplete = false;
     private bool enterlevel1 = false;
+    private bool enterlevel2 = false;
+    private bool enterlevel3 = false;
 
     [Header("Level 1 Door")]
     [SerializeField] private SpriteRenderer Level_1_Door;
@@ -64,9 +67,12 @@ public class Player_StageSelectManager : MonoBehaviour
 
     private bool Level2_Enable = false;
 
-    [Header("Level Unlock")]
-    public bool Level2Unlock;
-    [SerializeField] private Animator level2_lock;
+    [Header("Level 3 Door")]
+    [SerializeField] private SpriteRenderer Level_3_Door;
+
+    private bool Level3_Enable = false;
+
+
 
     [Header("Intro Circle Transition")]
     [SerializeField] private RectTransform CircleTransition;
@@ -81,6 +87,10 @@ public class Player_StageSelectManager : MonoBehaviour
     [Header("Leaderboard Manager")]
     [SerializeField] private Leaderboard_Manager leaderboard_1;
     [SerializeField] private GameObject Leaderboard_manager;
+    [SerializeField] private Leaderboard_Manager_Stage2 leaderboard_2;
+    [SerializeField] private GameObject Leaderboard_manager_2;
+    [SerializeField] private Leaderboard_Manager_Stage3 leaderboard_3;
+    [SerializeField] private GameObject Leaderboard_manager_3;
 
     private void Awake()
     {
@@ -100,6 +110,7 @@ public class Player_StageSelectManager : MonoBehaviour
         Leaderboard_Choice_UI.SetActive(false);
         Leaderboard_Stage1.SetActive(false);
         Leaderboard_Stage2.SetActive(false);
+        Leaderboard_Stage3.SetActive(false);
         ReturnToTitle_UI.SetActive(false); 
         Data_Reset_UI.SetActive(false);
         DataReset_Obj.SetActive(false);
@@ -137,6 +148,7 @@ public class Player_StageSelectManager : MonoBehaviour
     {
         Level1();
         Level2();
+        Level3();
     }
 
     private void EscapeMenuManager()
@@ -185,7 +197,7 @@ public class Player_StageSelectManager : MonoBehaviour
 
     private void DataLoad()
     {
-        Level2Unlock = System.Convert.ToBoolean(PlayerPrefs.GetInt("Level2Data"));
+       
         PlayerPrefs.Save();
         Debug.Log("Data Loaded");
     }
@@ -195,13 +207,23 @@ public class Player_StageSelectManager : MonoBehaviour
         SaveTextObj.SetActive(true);
         StartCoroutine(SaveTextOpacity());
         SaveText.text = "저장 중...";
-        PlayerPrefs.SetInt("Level2Data", System.Convert.ToInt16(Level2Unlock));
+        
         for (int i = 0; i < leaderboard_1.rankPlayerCount; i++)
         {
-            PlayerPrefs.SetString("World 1 " + "Player " + i, leaderboard_1.rankName[i]);
-            PlayerPrefs.SetFloat("World 1" + "Player " + i + " Best Score", leaderboard_1.bestScore[i]);
+            PlayerPrefs.SetString("World 1 " + "Player " + i, leaderboard_2.rankName_stage2[i]);
+            PlayerPrefs.SetFloat("World 1" + "Player " + i + " Best Score", leaderboard_2.bestScore_stage2[i]);
         }
-        
+        for (int i = 0; i < leaderboard_2.rankPlayerCount_stage2; i++)
+        {
+            PlayerPrefs.SetString("World 2 " + "Player " + i, leaderboard_2.rankName_stage2[i]);
+            PlayerPrefs.SetFloat("World 2" + "Player " + i + " Best Score", leaderboard_2.bestScore_stage2[i]);
+        }
+        for (int i = 0; i < leaderboard_3.rankPlayerCount_stage3; i++)
+        {
+            PlayerPrefs.SetString("World 3 " + "Player " + i, leaderboard_3.rankName_stage3[i]);
+            PlayerPrefs.SetFloat("World 3" + "Player " + i + " Best Score", leaderboard_3.bestScore_stage3[i]);
+        }
+
         yield return new WaitForSeconds(1.5f);
        SaveText.text = "저장 완료!";
        saveComplete = true;
@@ -237,8 +259,24 @@ public class Player_StageSelectManager : MonoBehaviour
             PlayerPrefs.DeleteKey("World 1 " + "Player " + i);
             PlayerPrefs.DeleteKey("World 1 " + "Player " + i + " Best Score");
         }
-        PlayerPrefs.DeleteKey("Level2Data");
+        
         PlayerPrefs.DeleteKey("rankPlayerCount");
+
+        for (int i = 0; i <= leaderboard_2.bestScore_stage2.Length; i++)
+        {
+            PlayerPrefs.DeleteKey("World 2 " + "Player " + i);
+            PlayerPrefs.DeleteKey("World 2 " + "Player " + i + " Best Score");
+        }
+
+        PlayerPrefs.DeleteKey("rankPlayerCount_stage2");
+
+        for (int i = 0; i <= leaderboard_3.bestScore_stage3.Length; i++)
+        {
+            PlayerPrefs.DeleteKey("World 3 " + "Player " + i);
+            PlayerPrefs.DeleteKey("World 3 " + "Player " + i + " Best Score");
+        }
+
+        PlayerPrefs.DeleteKey("rankPlayerCount_stage3");
         yield return new WaitForSeconds(1.5f);
         DataResetText.text = "데이터 초기화 완료!";
         yield return new WaitForSeconds(1.5f);
@@ -290,6 +328,13 @@ public class Player_StageSelectManager : MonoBehaviour
         leaderboard_open = true;
     }
 
+    public void Leaderboard_stage3_visible()
+    {
+        Leaderboard_Choice_UI.SetActive(false);
+        Leaderboard_Stage3.SetActive(true);
+        leaderboard_open = true;
+    }
+
 
     private void Level1()
     {
@@ -306,11 +351,26 @@ public class Player_StageSelectManager : MonoBehaviour
 
     private void Level2()
     {
-        if(Level2_Enable)
+        if(Level2_Enable && !enterlevel2)
         {
             if(Input.GetKeyDown(KeyCode.UpArrow))
             {
-                Debug.LogError("Player entered level 2");
+                enterlevel2 = false;
+                DontDestroyOnLoad(Leaderboard_manager_2);
+                StartCoroutine(Enterlevel2());
+            }
+        }
+    }
+
+    private void Level3()
+    {
+        if (Level3_Enable && !enterlevel3)
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                enterlevel3 = false;
+                DontDestroyOnLoad(leaderboard_3);
+                StartCoroutine(Enterlevel3());
             }
         }
     }
@@ -327,6 +387,33 @@ public class Player_StageSelectManager : MonoBehaviour
         enterLevelBlack.SetActive(true);
         yield return new WaitForSeconds(1.0f);
         SceneManager.LoadScene("Level1");
+    }
+    IEnumerator Enterlevel2()
+    {
+        player.enterlevel1 = true;
+        StartCoroutine(player_opacity());
+        for (float i = 3.0f; i >= 0.05f; i -= 0.01f * Time.deltaTime * 300)
+        {
+            CircleTransition.localScale = new Vector3(i, i, i);
+            yield return new WaitForSeconds(0.001f);
+        }
+        enterLevelBlack.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
+        SceneManager.LoadScene("Level2");
+    }
+
+    IEnumerator Enterlevel3()
+    {
+        player.enterlevel1 = true;
+        StartCoroutine(player_opacity());
+        for (float i = 3.0f; i >= 0.05f; i -= 0.01f * Time.deltaTime * 300)
+        {
+            CircleTransition.localScale = new Vector3(i, i, i);
+            yield return new WaitForSeconds(0.001f);
+        }
+        enterLevelBlack.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
+        SceneManager.LoadScene("Level3");
     }
 
     IEnumerator player_opacity()
@@ -367,6 +454,13 @@ public class Player_StageSelectManager : MonoBehaviour
         player.isPause = false;
     }
 
+    public void Leaderboard_Stage_3_Close()
+    {
+        Leaderboard_Stage3.SetActive(false);
+        leaderboard_open = false;
+        player.isPause = false;
+    }
+
     public void TitleCheckBtn()
     {
         ReturnToTitle_UI = GameObject.Find("ReturnToTitle");
@@ -397,34 +491,23 @@ public class Player_StageSelectManager : MonoBehaviour
             
         }
 
-        if(Level2Unlock)
-        {
+       
             if(collision.gameObject.tag == "Level2")
             {
                 Level2_Enable = true;
-                Level_2_Door.color = Color.green;
-                Debug.LogError("player reached level 2 door");
+                Level_2_Door.color = new Color32(255, 255, 255, 255);
+                
             }
-        }
-        else
+
+        if (collision.gameObject.tag == "Level3")
         {
-            if(collision.gameObject.tag == "Level2" || collision.gameObject.name == "level2lock")
-            {
-                if (Input.GetKeyDown(KeyCode.UpArrow))
-                    StartCoroutine(level2lock_touch());
-            }
+            Level3_Enable = true;
+            Level_3_Door.color = new Color32(255, 255, 255, 255);
+
         }
     }
 
-    IEnumerator level2lock_touch()
-    {
-        
-            level2_lock.SetBool("istouch", true);
-            yield return new WaitForSeconds(1.5f);
-            level2_lock.SetBool("istouch", false);
-        
-            
-    }
+   
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Level1")
@@ -446,17 +529,21 @@ public class Player_StageSelectManager : MonoBehaviour
             StartCoroutine(level1Text_hide());
         }
 
-        if(Level2Unlock)
-        {
+        
             if(collision.gameObject.tag == "Level2")
             {
                 Level2_Enable = false;
-                Level_2_Door.color = Color.white;
-                Debug.LogError("player exited level 2 door");
+                Level_2_Door.color = new Color32(100, 100, 100, 255);
+                
             }
+
+        if (collision.gameObject.tag == "Level3")
+        {
+            Level3_Enable = false;
+            Level_3_Door.color = new Color32(100, 100, 100, 255);
+
         }
-        
-        
+
     }
 
     IEnumerator level1Text_show()
@@ -488,4 +575,6 @@ public class Player_StageSelectManager : MonoBehaviour
             
         }
     }
+
+   
 }

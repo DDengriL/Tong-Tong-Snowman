@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 {
 
     Stage1_Goal st1_goal;
+    Stage3_Goal st3_goal;
 
     FakeGoal_Trap fakegoaltrap;
     Level2_Trap_Pipe2 lvl2_pipe_trap;
@@ -50,6 +51,7 @@ public class Player : MonoBehaviour
     public bool isArrive = false;
     public bool isPause = false;
     public bool enterlevel1 = false;
+    
     public bool isdead = false;
     public bool ispipein = false;
 
@@ -76,6 +78,12 @@ public class Player : MonoBehaviour
             lvl2_move_Brick = GameObject.Find("move_brick").GetComponent<Level2_MoveBrick_Trap>();
             lvl2_move_back_trap = GameObject.Find("move_Brick_back_trap").GetComponent<Level2_Move_Brick_BackTrap>();
             lvl2_tp_pipe = GameObject.Find("Teleport_Pipe_Collision").GetComponent<Level2_Teleport_PIpe_Collision>();
+        }
+        if (SceneManager.GetActiveScene().name == "Level3")
+        {
+            st3_goal = GameObject.Find("Goal").GetComponent<Stage3_Goal>();
+            score = GameObject.Find("ScoreManager").GetComponent<Score>();
+            Leaderboard_manager = GameObject.Find("Leaderboard_Manager_stage3");
         }
         tmp = transform.position;
         ani = GetComponent<Animator>();
@@ -300,6 +308,11 @@ public class Player : MonoBehaviour
             {
                 StartCoroutine(st1_goal.Goal());
                 st1_goal.isGoal = true;
+            }
+            if (SceneManager.GetActiveScene().name == "Level3")
+            {
+                StartCoroutine(st3_goal.Goal());
+                st3_goal.isGoal = true;
             }
 
             isArrive = true;

@@ -12,6 +12,7 @@ TagManager:
   - Goal_Bonus
   - Enemy
   - DirSwitch
+  - Level3
   layers:
   - Default
   - TransparentFX
