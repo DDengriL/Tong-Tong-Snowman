@@ -16,6 +16,9 @@ public class Player : MonoBehaviour
     Level2_Move_Brick_BackTrap lvl2_move_back_trap;
     Level2_Teleport_PIpe_Collision lvl2_tp_pipe;
 
+
+    Starcoin_UI starcoin_ui;
+
     Score score;
 
     GroundChk gchk;
@@ -62,6 +65,10 @@ public class Player : MonoBehaviour
         
         gchk = GetComponentInChildren<GroundChk>();
         audio = GetComponent<AudioSource>();
+        if(SceneManager.GetActiveScene().name != "StageSelect")
+        {
+            starcoin_ui = GameObject.Find("GameSystemManager").GetComponent<Starcoin_UI>();
+        }
         if(SceneManager.GetActiveScene().name == "Level1")
         {
             st1_goal = GameObject.Find("Goal").GetComponent<Stage1_Goal>();
@@ -302,6 +309,19 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
+        if(collision.gameObject.name == "StarCoin_1")
+        {
+            starcoin_ui.coin_1_collect = true;
+        }
+        if (collision.gameObject.name == "StarCoin_2")
+        {
+            starcoin_ui.coin_2_collect = true;
+        }
+        if (collision.gameObject.name == "StarCoin_3")
+        {
+            starcoin_ui.coin_3_collect = true;
+        }
         if (collision.gameObject.name == "Goal")
         {
             if (SceneManager.GetActiveScene().name == "Level1")
@@ -318,6 +338,11 @@ public class Player : MonoBehaviour
             isArrive = true;
         }
         if (collision.gameObject.name == "Goal_Bonus")
+        {
+            score.score += 500;
+        }
+
+        if (collision.gameObject.tag == "StarCoin")
         {
             score.score += 500;
         }

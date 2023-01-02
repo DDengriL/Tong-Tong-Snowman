@@ -90,7 +90,7 @@ public class Stage1_Goal : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         Debug.Log("Stage Clear");
         DontDestroyOnLoad(GameSystemManager_obj);
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene("level1_clear");
     }
 
     

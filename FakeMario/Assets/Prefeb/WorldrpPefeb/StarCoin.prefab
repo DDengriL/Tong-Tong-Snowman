@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8655101545417147626}
   - component: {fileID: 8655101545417147627}
   - component: {fileID: 8655101545417147624}
+  - component: {fileID: 3337890669275461932}
+  - component: {fileID: 4341012460159806253}
   m_Layer: 0
   m_Name: StarCoin
   m_TagString: Untagged
@@ -105,3 +107,31 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!58 &3337890669275461932
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8655101545417147625}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.034, y: -0.04}
+  serializedVersion: 2
+  m_Radius: 0.86
+--- !u!114 &4341012460159806253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8655101545417147625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8a004865b9923b4dbff1097e1fea8f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

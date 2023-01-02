@@ -13,6 +13,7 @@ TagManager:
   - Enemy
   - DirSwitch
   - Level3
+  - StarCoin
   layers:
   - Default
   - TransparentFX

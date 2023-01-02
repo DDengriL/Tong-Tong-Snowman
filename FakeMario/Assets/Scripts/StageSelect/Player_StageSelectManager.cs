@@ -181,7 +181,7 @@ public class Player_StageSelectManager : MonoBehaviour
 
     private void EscapeUIOffsetScrolling()
     {
-        if(EscapeMenu.activeSelf || ReturnToTitle_UI.activeSelf || Data_Reset_UI.activeSelf)
+        if(EscapeMenu.activeSelf || ReturnToTitle_UI.activeSelf || Data_Reset_UI.activeSelf || Leaderboard_Choice_UI.activeSelf)
         {
             if(OffsetX < 200)
             {
@@ -436,7 +436,7 @@ public class Player_StageSelectManager : MonoBehaviour
     public void EscapeMenu_Leaderboard()
     {
         EscapeMenu.SetActive(false);
-        
+        leaderboard_open = true;
         Leaderboard_Choice_UI.SetActive(true);
     }
 
