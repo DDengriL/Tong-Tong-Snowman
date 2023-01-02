@@ -359,8 +359,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Leaderboard_Register_Stage2, Assembly-CSharp
+      - m_Target: {fileID: 715316506}
+        m_TargetAssemblyTypeName: Leaderboard_Register_Stage3, Assembly-CSharp
         m_MethodName: CancelBtn
         m_Mode: 1
         m_Arguments:
@@ -1268,8 +1268,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Leaderboard_Register_Stage2, Assembly-CSharp
+      - m_Target: {fileID: 715316506}
+        m_TargetAssemblyTypeName: Leaderboard_Register_Stage3, Assembly-CSharp
         m_MethodName: Register_Btn
         m_Mode: 1
         m_Arguments:

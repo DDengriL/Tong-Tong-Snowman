@@ -31,7 +31,7 @@ public class Score : MonoBehaviour
         {
             score_text = null;
         }
-        if(SceneManager.GetActiveScene().name != "StageSelect" && SceneManager.GetActiveScene().name != "Leaderboard")
+        if(SceneManager.GetActiveScene().name != "StageSelect" && SceneManager.GetActiveScene().name != "Leaderboard" && SceneManager.GetActiveScene().name != "Leaderboard_2" && SceneManager.GetActiveScene().name != "Leaderboard_3" && SceneManager.GetActiveScene().name != "level1_clear" && SceneManager.GetActiveScene().name != "level2_clear" && SceneManager.GetActiveScene().name != "level3_clear")
         {
             score_text.text = string.Format("{0:D8}", score);
         }

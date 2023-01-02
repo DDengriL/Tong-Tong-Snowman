@@ -96,7 +96,7 @@ public class Leaderboard_Register_Stage2 : MonoBehaviour
                 }
             }
             leader_manager.rankPlayerCount_stage2++;
-            PlayerPrefs.SetInt("rankPlayerCount", leader_manager.rankPlayerCount_stage2);
+            PlayerPrefs.SetInt("rankPlayerCount_stage2", leader_manager.rankPlayerCount_stage2);
             Destroy(Leaderboad_obj);
             Destroy(scoreboard_obj);
             yield return new WaitForSeconds(1.5f);

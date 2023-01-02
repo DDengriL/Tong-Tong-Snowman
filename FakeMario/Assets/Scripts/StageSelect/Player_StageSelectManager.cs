@@ -211,17 +211,17 @@ public class Player_StageSelectManager : MonoBehaviour
         for (int i = 0; i < leaderboard_1.rankPlayerCount; i++)
         {
             PlayerPrefs.SetString("World 1 " + "Player " + i, leaderboard_2.rankName_stage2[i]);
-            PlayerPrefs.SetFloat("World 1" + "Player " + i + " Best Score", leaderboard_2.bestScore_stage2[i]);
+            PlayerPrefs.SetFloat("World 1 " + "Player " + i + " Best Score", leaderboard_2.bestScore_stage2[i]);
         }
         for (int i = 0; i < leaderboard_2.rankPlayerCount_stage2; i++)
         {
             PlayerPrefs.SetString("World 2 " + "Player " + i, leaderboard_2.rankName_stage2[i]);
-            PlayerPrefs.SetFloat("World 2" + "Player " + i + " Best Score", leaderboard_2.bestScore_stage2[i]);
+            PlayerPrefs.SetFloat("World 2 " + "Player " + i + " Best Score", leaderboard_2.bestScore_stage2[i]);
         }
         for (int i = 0; i < leaderboard_3.rankPlayerCount_stage3; i++)
         {
             PlayerPrefs.SetString("World 3 " + "Player " + i, leaderboard_3.rankName_stage3[i]);
-            PlayerPrefs.SetFloat("World 3" + "Player " + i + " Best Score", leaderboard_3.bestScore_stage3[i]);
+            PlayerPrefs.SetFloat("World 3 " + "Player " + i + " Best Score", leaderboard_3.bestScore_stage3[i]);
         }
 
         yield return new WaitForSeconds(1.5f);
@@ -369,7 +369,7 @@ public class Player_StageSelectManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 enterlevel3 = false;
-                DontDestroyOnLoad(leaderboard_3);
+                DontDestroyOnLoad(Leaderboard_manager_3);
                 StartCoroutine(Enterlevel3());
             }
         }

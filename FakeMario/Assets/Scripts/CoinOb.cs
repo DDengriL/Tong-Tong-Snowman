@@ -9,7 +9,7 @@ public class CoinOb : MonoBehaviour
 
     void Start()
     {
-        score = GameObject.Find("GameSystemManager").GetComponent<Score>();
+        score = GameObject.Find("ScoreManager").GetComponent<Score>();
         coin_text = GameObject.Find("GameSystemManager").GetComponent<Coin_Text>();
 
     }

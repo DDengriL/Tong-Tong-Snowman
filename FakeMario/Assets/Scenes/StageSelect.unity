@@ -3087,7 +3087,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 665061870}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.9998321
+  m_Size: 0.9999002
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3405,7 +3405,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 526664336}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.9998321
+  m_Size: 0.9999002
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4168,7 +4168,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -653, y: 312.22934}
+  m_AnchoredPosition: {x: -653, y: 312.22964}
   m_SizeDelta: {x: 226.6625, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &980459147
@@ -6556,7 +6556,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 612467824}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.9998321
+  m_Size: 0.9999002
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -7520,7 +7520,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -653, y: 312.22934}
+  m_AnchoredPosition: {x: -653, y: 312.22964}
   m_SizeDelta: {x: 226.6625, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1271364804
@@ -9333,7 +9333,7 @@ GameObject:
   - component: {fileID: 1571302981}
   - component: {fileID: 1571302982}
   m_Layer: 0
-  m_Name: 'Leaderboard_Manager_stage3 '
+  m_Name: Leaderboard_Manager_stage3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11247,7 +11247,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -653, y: 312.22934}
+  m_AnchoredPosition: {x: -653, y: 312.22964}
   m_SizeDelta: {x: 226.6625, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2031047035

@@ -31,6 +31,10 @@ public class Leaderboard_Register_Stage3 : MonoBehaviour
     private void Start()
     {
         leader_manager = GameObject.Find("Leaderboard_Manager_stage3").GetComponent<Leaderboard_Manager_Stage3>();
+        if(leader_manager == null)
+        {
+            Debug.Log("Null");
+        }
         Leaderboad_obj = GameObject.Find("Leaderboard_Manager_stage3");
         scoreboard_obj = GameObject.Find("ScoreManager");
         score = GameObject.Find("ScoreManager").GetComponent<Score>();
@@ -53,7 +57,7 @@ public class Leaderboard_Register_Stage3 : MonoBehaviour
             register_btn.SetActive(false);
             Loading_Process.SetActive(true);
             loading_text.text = "µî·Ï Áß...";
-            if (PlayerPrefs.HasKey("rankPlayerCount_stage2") == false)
+            if (PlayerPrefs.HasKey("rankPlayerCount_stage3") == false)
             {
                 leader_manager.rankPlayerCount_stage3 = 1;
             }

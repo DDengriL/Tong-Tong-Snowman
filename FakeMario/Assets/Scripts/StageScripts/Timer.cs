@@ -10,6 +10,7 @@ public class Timer : MonoBehaviour
     [SerializeField] private Text timer_text;
 
     Stage1_Goal st1_goal;
+    Stage2_Goal st2_goal;
     Stage3_Goal st3_goal;
     
     public int min = 6;
@@ -20,7 +21,8 @@ public class Timer : MonoBehaviour
     {
         if(SceneManager.GetActiveScene().name == "Level1")
         st1_goal = GameObject.Find("Goal").GetComponent<Stage1_Goal>();
-
+        if (SceneManager.GetActiveScene().name == "Level2")
+            st2_goal = GameObject.Find("Goal").GetComponent<Stage2_Goal>();
         if (SceneManager.GetActiveScene().name == "Level3")
             st3_goal = GameObject.Find("Goal").GetComponent<Stage3_Goal>();
         if (st1_goal == null)
@@ -65,19 +67,24 @@ public class Timer : MonoBehaviour
 
         private void TimerStart2()
         {
-            //if (!st1_goal.isGoal)
-            //{
-                if (sec <= 0)
-                {
-                    min--;
-                    sec = 60;
-                }
-                else
-                {
-                    sec -= Time.deltaTime;
-                }
-            //}
+        if (min == 0 && sec == 0 && !st2_goal.isGoal)
+        {
+            SceneManager.LoadScene("Level2");
         }
+        if (!st2_goal.isGoal)
+        {
+
+            if (sec <= 0)
+            {
+                min--;
+                sec = 60;
+            }
+            else
+            {
+                sec -= Time.deltaTime;
+            }
+        }
+    }
     private void TimerStart3()
     {
         if (min == 0 && sec == 0 && !st3_goal.isGoal)

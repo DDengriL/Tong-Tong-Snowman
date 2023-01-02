@@ -36,12 +36,12 @@ public class Stage1_Goal : MonoBehaviour
     {
         player_rigid.gravityScale = 0;
         player_rigid.velocity = new Vector2(0,0);
-        player.transform.position = new Vector3(205.58f, player.transform.position.y,player.transform.position.z);
+        player.transform.position = new Vector3(205.54f, player.transform.position.y,player.transform.position.z);
         player_anim.SetBool("islanding", false);
         player_anim.SetBool("ismove", false);
         player_anim.SetBool("isgoal", true);
         player_anim.SetBool("isjump", true);
-        while(player.transform.position.y >= 0.823f)
+        while(player.transform.position.y >= 0.9f)
         {
             player.transform.Translate(0, -1.5f * Time.deltaTime, 0);
             yield return new WaitForSeconds(0.001f);
@@ -52,7 +52,7 @@ public class Stage1_Goal : MonoBehaviour
         player_anim.SetBool("ismove", false);
         yield return new WaitForSeconds(1.0f);
         
-        while(player.transform.position.x <= 213.44f)
+        while(player.transform.position.x <= 213.36f)
         {
             player_anim.SetBool("ismove", true);
             player.transform.Translate(1.5f * Time.deltaTime, 0, 0);

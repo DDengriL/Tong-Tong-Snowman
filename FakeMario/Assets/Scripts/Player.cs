@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 {
 
     Stage1_Goal st1_goal;
+    Stage2_Goal st2_goal;
     Stage3_Goal st3_goal;
 
     FakeGoal_Trap fakegoaltrap;
@@ -85,6 +86,8 @@ public class Player : MonoBehaviour
             lvl2_move_Brick = GameObject.Find("move_brick").GetComponent<Level2_MoveBrick_Trap>();
             lvl2_move_back_trap = GameObject.Find("move_Brick_back_trap").GetComponent<Level2_Move_Brick_BackTrap>();
             lvl2_tp_pipe = GameObject.Find("Teleport_Pipe_Collision").GetComponent<Level2_Teleport_PIpe_Collision>();
+            score = GameObject.Find("ScoreManager").GetComponent<Score>();
+            st2_goal = GameObject.Find("Goal").GetComponent<Stage2_Goal>();
         }
         if (SceneManager.GetActiveScene().name == "Level3")
         {
@@ -328,6 +331,11 @@ public class Player : MonoBehaviour
             {
                 StartCoroutine(st1_goal.Goal());
                 st1_goal.isGoal = true;
+            }
+            if(SceneManager.GetActiveScene().name == "Level2")
+            {
+                StartCoroutine(st2_goal.Goal());
+                st2_goal.isGoal = true;
             }
             if (SceneManager.GetActiveScene().name == "Level3")
             {
